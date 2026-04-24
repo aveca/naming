@@ -7,52 +7,768 @@
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{background:#080810;font-family:'Outfit',sans-serif;color:#fff;min-height:100vh;padding:40px 16px}
-.container{max-width:800px;margin:0 auto}
-.header{text-align:center;margin-bottom:50px}
-h1{font-size:12px;letter-spacing:3px;color:#2a2a45;text-transform:uppercase;margin-bottom:10px}
-h2{font-size:32px;font-weight:800;background:linear-gradient(135deg,#00e676,#00bcd4);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:8px}
-.tagline{font-size:14px;color:#2a2a45;margin-bottom:20px}
-.tools-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-bottom:40px}
-.tool-card{background:#111120;border:1px solid #1e1e35;border-radius:14px;padding:24px;text-decoration:none;color:inherit;transition:all 0.2s;cursor:pointer}
-.tool-card:hover{border-color:#00e67644;background:#0f0f1e;transform:translateY(-2px)}
-.tool-icon{font-size:32px;margin-bottom:12px}
-.tool-title{font-size:16px;font-weight:700;margin-bottom:8px;color:#e0e0f0}
-.tool-desc{font-size:12px;color:#333355;line-height:1.6}
-.footer{text-align:center;color:#1a1a28;font-size:11px;margin-top:30px}
+body{
+  background:#080810;
+  font-family:'Outfit',sans-serif;
+  color:#fff;
+  min-height:100vh;
+  padding:20px 16px;
+}
+
+.container{max-width:900px;margin:0 auto}
+
+/* Header */
+.header{text-align:center;margin-bottom:30px}
+h1{font-size:11px;letter-spacing:3px;color:#2a2a45;text-transform:uppercase;margin-bottom:8px}
+h2{font-size:28px;font-weight:800;background:linear-gradient(135deg,#00e676,#00bcd4);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:6px}
+.tagline{font-size:13px;color:#2a2a45}
+
+/* Tabs */
+.tabs{
+  display:flex;gap:2px;background:#0d0d18;border:1px solid #1e1e35;border-radius:12px;padding:3px;margin-bottom:24px;flex-wrap:wrap
+}
+.tab{
+  flex:1;min-width:130px;padding:10px 14px;text-align:center;font-size:12px;font-weight:600;color:#2a2a45;cursor:pointer;border-radius:10px;transition:all 0.15s;letter-spacing:0.5px;white-space:nowrap;border:none;background:transparent
+}
+.tab.active{background:#111120;color:#00e676;border:1px solid #1e1e35}
+.tab:hover{color:#00e676}
+
+/* Tab content */
+.tab-content{display:none}
+.tab-content.active{display:block;animation:fadeIn 0.2s ease}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+
+/* Tool sections */
+.tool-section{margin-bottom:28px}
+.section-title{font-size:13px;font-weight:700;color:#e0e0f0;margin-bottom:14px;display:flex;align-items:center;gap:6px}
+.section-title .icon{font-size:16px}
+
+/* Inputs & Controls */
+.controls{display:flex;flex-direction:column;gap:10px;margin-bottom:16px}
+.row{display:flex;gap:8px;flex-wrap:wrap}
+input[type=text]{
+  flex:1;min-width:150px;
+  background:#111120;border:1px solid #1e1e35;border-radius:10px;
+  color:#fff;font-family:'Outfit',sans-serif;font-size:13px;
+  padding:11px 14px;outline:none;transition:border-color 0.15s
+}
+input[type=text]:focus{border-color:#00e67644}
+input[type=text]::placeholder{color:#333355}
+
+.btn{
+  background:linear-gradient(135deg,#00e676,#00bcd4);
+  border:none;border-radius:10px;
+  color:#000;font-weight:700;font-size:12px;
+  font-family:'Outfit',sans-serif;
+  padding:11px 18px;cursor:pointer;white-space:nowrap;
+  transition:opacity 0.15s;border:none;flex-shrink:0
+}
+.btn:hover{opacity:0.85}
+.btn:disabled{opacity:0.4;cursor:default}
+
+.btn.secondary{
+  background:#111120;border:1px solid #1e1e35;color:#444466;
+}
+.btn.secondary:hover{border-color:#2a2a4a;color:#6666aa}
+
+.btn.stop{background:#ff444418;border:1px solid #ff444430;color:#ff4444}
+
+/* TLD buttons */
+.tld-row{display:flex;gap:5px;flex-wrap:wrap;margin-top:8px}
+.tld-btn{
+  padding:5px 11px;border-radius:20px;
+  font-size:10px;font-weight:500;
+  border:1px solid #1e1e35;background:transparent;color:#2a2a45;
+  cursor:pointer;font-family:'Outfit',sans-serif;
+  transition:all 0.1s
+}
+.tld-btn.on{
+  background:#00e67615;border-color:#00e67635;color:#00e676
+}
+
+/* Results Grid */
+.results{
+  display:flex;flex-direction:column;gap:5px;
+}
+
+.domain-card{
+  background:#0f0f1e;border:1px solid #1a1a30;border-radius:11px;
+  padding:11px 14px;display:flex;align-items:center;gap:10px;
+  animation:slideIn 0.2s ease forwards;opacity:0
+}
+@keyframes slideIn{from{opacity:0;transform:translateY(3px)}to{opacity:1;transform:none}}
+
+.domain-card.avail{border-color:#00e67630;background:#071410}
+.domain-card.hot{border-color:#00e67625;background:#0a1a10}
+.domain-card.taken{opacity:0.35}
+
+.dname{
+  flex:1;font-family:'JetBrains Mono',monospace;
+  font-size:13px;font-weight:600;color:#e0e0f0
+}
+.dname .ext{color:#444466;font-weight:400}
+.domain-card.avail .dname{color:#00e676}
+.domain-card.avail .dname .ext{color:#00e67699}
+
+.badge{
+  font-size:9px;padding:3px 8px;border-radius:6px;
+  font-weight:600;letter-spacing:0.5px;flex-shrink:0
+}
+.b-hot{background:#00e67618;color:#00e676;border:1px solid #00e67630}
+.b-good{background:#ffab4018;color:#ffab40;border:1px solid #ffab4030}
+.b-ok{background:#ffffff08;color:#333355;border:1px solid #ffffff10}
+.b-avail{background:#00e67620;color:#00e676;border:1px solid #00e67635}
+.b-taken{background:#ffffff08;color:#222240;border:1px solid #1a1a30}
+
+.links{display:flex;gap:3px;flex-shrink:0;flex-wrap:wrap}
+.lbtn{
+  padding:5px 8px;border-radius:6px;font-size:9px;
+  font-weight:600;font-family:'Outfit',sans-serif;
+  text-decoration:none;border:1px solid #1a1a30;
+  color:#2a2a45;transition:all 0.1s;white-space:nowrap
+}
+.lbtn:hover{border-color:#00e67640;color:#00e676}
+.domain-card.avail .lbtn{border-color:#00e67630;color:#00e676}
+
+.cpbtn{
+  background:transparent;border:1px solid #1a1a30;border-radius:6px;
+  color:#2a2a45;padding:5px 8px;cursor:pointer;font-size:10px;
+  transition:all 0.1s;flex-shrink:0
+}
+.domain-card.avail .cpbtn{border-color:#00e67630;color:#00e67699}
+.cpbtn.ok{color:#00e676;border-color:#00e67630}
+
+.method-tag{font-size:8px;color:#1e1e35;font-family:'JetBrains Mono',monospace;flex-shrink:0}
+
+/* Status & Progress */
+.progress-bar{
+  height:3px;background:#111120;border-radius:2px;
+  overflow:hidden;margin-bottom:8px;display:none
+}
+.progress-fill{
+  height:100%;background:linear-gradient(90deg,#00e676,#00bcd4);
+  border-radius:2px;transition:width 0.3s ease;width:0%
+}
+
+.status-row{
+  display:flex;justify-content:space-between;align-items:center;
+  margin-bottom:12px;font-size:11px;color:#2a2a45;gap:8px
+}
+.status-text{flex:1}
+
+.stats{
+  display:flex;gap:8px;margin-bottom:12px;display:none
+}
+.stat{
+  flex:1;background:#0f0f1e;border:1px solid #1a1a30;
+  border-radius:8px;padding:8px 10px;text-align:center
+}
+.stat-num{font-size:16px;font-weight:700;font-family:'JetBrains Mono',monospace}
+.stat-label{font-size:9px;color:#2a2a45;letter-spacing:1px;margin-top:2px}
+
+/* Empty states */
+.empty{
+  text-align:center;padding:30px 20px;color:#1a1a28;font-size:12px;line-height:2
+}
+
+.count-label{
+  font-size:10px;color:#2a2a45;margin-bottom:10px
+}
+
+.section-head{
+  font-size:9px;letter-spacing:2px;color:#1a1a28;
+  text-transform:uppercase;margin-top:12px;margin-bottom:6px
+}
+
+@keyframes spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+.spin{
+  display:inline-block;width:12px;height:12px;
+  border:2px solid #333355;border-top-color:#00e676;
+  border-radius:50%;animation:spin 0.6s linear infinite;
+  vertical-align:middle;margin-right:5px
+}
+
+/* Footer */
+.footer{
+  text-align:center;color:#1a1a28;font-size:10px;margin-top:30px;padding-top:20px;border-top:1px solid #1a1a30
+}
 </style>
 </head>
 <body>
+
 <div class="container">
+  <!-- Header -->
   <div class="header">
     <h1>Domain Naming Suite</h1>
     <h2>Find Your Perfect Domain</h2>
-    <p class="tagline">Three specialized tools for domain discovery and availability checking</p>
+    <p class="tagline">Generate • Coin • Check — All in One</p>
   </div>
 
-  <div class="tools-grid">
-    <a href="domain-hunter.html" class="tool-card">
-      <div class="tool-icon">⚡</div>
-      <div class="tool-title">Domain Hunter</div>
-      <div class="tool-desc">Generate brandable domains from keywords. Quick price check on Namecheap, Porkbun & GoDaddy.</div>
-    </a>
-
-    <a href="domain-hunter-pro.html" class="tool-card">
-      <div class="tool-icon">🔬</div>
-      <div class="tool-title">Domain Hunter Pro</div>
-      <div class="tool-desc">Coined names like Spotify & Revolut. Portmanteau generation + pronunciation scoring.</div>
-    </a>
-
-    <a href="domain-checker-live.html" class="tool-card">
-      <div class="tool-icon">🟢</div>
-      <div class="tool-title">Live DNS Checker</div>
-      <div class="tool-desc">Real availability check via Cloudflare DNS. Batch check multiple domains instantly.</div>
-    </a>
+  <!-- Tabs -->
+  <div class="tabs">
+    <button class="tab active" onclick="switchTab(0, this)">⚡ Quick Hunt</button>
+    <button class="tab" onclick="switchTab(1, this)">🔬 Pro Coins</button>
+    <button class="tab" onclick="switchTab(2, this)">🟢 Live Check</button>
   </div>
 
+  <!-- TAB 1: QUICK HUNT (Domain Hunter) -->
+  <div class="tab-content active">
+    <div class="tool-section">
+      <div class="section-title"><span class="icon">⚡</span> Quick Domain Hunt</div>
+      
+      <div class="controls">
+        <div class="row">
+          <input type="text" id="kw-quick" placeholder="Enter keyword (ex: edge, signal, trade, pick)" />
+          <button class="btn" onclick="generateQuick()">Generate Names</button>
+        </div>
+        <div class="tld-row" id="tld-quick-row"></div>
+      </div>
+
+      <div class="count-label" id="count-quick" style="display:none"></div>
+      <div class="results" id="results-quick">
+        <div class="empty">Enter a keyword above to generate domain ideas</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 2: PRO COINS (Domain Hunter Pro) -->
+  <div class="tab-content">
+    <div class="tool-section">
+      <div class="section-title"><span class="icon">🔬</span> Pro Coined Names</div>
+      
+      <div class="controls">
+        <div class="row">
+          <input type="text" id="kw-pro-1" placeholder="Word 1 (ex: edge, trade)" />
+          <input type="text" id="kw-pro-2" placeholder="Word 2 optional (ex: hunt, flow)" />
+          <button class="btn" onclick="generatePro()">Generate Coins</button>
+        </div>
+        <div class="tld-row" id="tld-pro-row"></div>
+      </div>
+
+      <div style="display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap">
+        <button class="btn secondary" style="flex:1;min-width:80px" onclick="switchProTab('all', this)">All</button>
+        <button class="btn secondary" style="flex:1;min-width:80px" onclick="switchProTab('coined', this)">Coined</button>
+        <button class="btn secondary" style="flex:1;min-width:80px" onclick="switchProTab('short', this)">Short ≤6</button>
+        <button class="btn secondary" style="flex:1;min-width:80px" onclick="switchProTab('hot', this)">🔥 Hot</button>
+      </div>
+
+      <div class="count-label" id="count-pro" style="display:none"></div>
+      <div class="results" id="results-pro">
+        <div class="empty">Invent words like Spotify, Robinhood, Revolut</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 3: LIVE CHECK (Domain Checker) -->
+  <div class="tab-content">
+    <div class="tool-section">
+      <div class="section-title"><span class="icon">🟢</span> Live DNS Checker</div>
+      
+      <div class="controls">
+        <div class="row">
+          <input type="text" id="domains-list" placeholder="Domain names (comma or newline separated): edgr, travio, sgnlr" />
+          <button class="btn" id="check-btn" onclick="startDNSCheck()">Check DNS</button>
+        </div>
+        <div class="tld-row" id="tld-check-row"></div>
+
+        <div class="row" style="margin-top:8px">
+          <input type="text" id="gen-keyword" placeholder="Auto-generate from keyword" />
+          <button class="btn secondary" onclick="autoGenerateForCheck()">Generate Names</button>
+        </div>
+      </div>
+
+      <div class="progress-bar" id="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+      <div class="status-row">
+        <div class="status-text" id="status-text"></div>
+      </div>
+      
+      <div class="stats" id="stats-bar">
+        <div class="stat"><div class="stat-num" id="stat-avail" style="color:#00e676">0</div><div class="stat-label">AVAILABLE</div></div>
+        <div class="stat"><div class="stat-num" id="stat-taken" style="color:#333355">0</div><div class="stat-label">TAKEN</div></div>
+        <div class="stat"><div class="stat-num" id="stat-total" style="color:#555577">0</div><div class="stat-label">CHECKED</div></div>
+      </div>
+
+      <div id="avail-section" style="display:none"><div class="section-head">🟢 Available</div></div>
+      <div class="results" id="results-avail" style="margin-bottom:6px"></div>
+
+      <div id="taken-section" style="display:none"><div class="section-head">✗ Taken</div></div>
+      <div class="results" id="results-taken"></div>
+    </div>
+  </div>
+
+  <!-- Footer -->
   <div class="footer">
-    <p>All tools check real availability via Cloudflare DNS &amp; registrar APIs<br>No WHOIS lookups — Privacy first</p>
+    <p>All domains checked via live Cloudflare DNS • No WHOIS • Privacy first 🔒</p>
   </div>
 </div>
+
+<script>
+// ═══════════════════════════════════════════════════════════════════════════
+// CONFIGURATION
+// ═══════════════════════════════════════════════════════════════════════════
+const TLDS = ['.com','.io','.app','.co','.ai','.xyz','.gg','.pro','.net','.dev'];
+const QUICK_DEFAULT_TLDS = new Set(['.com','.io','.app','.co']);
+const PRO_DEFAULT_TLDS = new Set(['.com','.io','.app','.co']);
+const CHECK_DEFAULT_TLDS = new Set(['.com','.io','.app']);
+
+let activeTldsQuick = new Set(QUICK_DEFAULT_TLDS);
+let activeTldsPro = new Set(PRO_DEFAULT_TLDS);
+let activeTldsCheck = new Set(CHECK_DEFAULT_TLDS);
+
+// Initialize TLD buttons
+function initTLDs() {
+  initTLDRow('tld-quick-row', activeTldsQuick);
+  initTLDRow('tld-pro-row', activeTldsPro);
+  initTLDRow('tld-check-row', activeTldsCheck);
+}
+
+function initTLDRow(elementId, activeSet) {
+  const row = document.getElementById(elementId);
+  TLDS.forEach(t => {
+    const b = document.createElement('button');
+    b.className = 'tld-btn' + (activeSet.has(t) ? ' on' : '');
+    b.textContent = t;
+    b.onclick = () => {
+      if(activeSet.has(t)) activeSet.delete(t);
+      else activeSet.add(t);
+      b.className = 'tld-btn' + (activeSet.has(t) ? ' on' : '');
+    };
+    row.appendChild(b);
+  });
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// TAB SWITCHING
+// ═══════════════════════════════════════════════════════════════════════════
+function switchTab(idx, el) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+  document.querySelectorAll('.tab-content')[idx].classList.add('active');
+}
+
+function switchProTab(type, el) {
+  document.querySelectorAll('.btn.secondary').forEach(b => b.style.background = '#111120');
+  el.style.background = '#00e67618';
+  renderProTab(type);
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// QUICK HUNT (Domain Hunter)
+// ═══════════════════════════════════════════════════════════════════════════
+const PREFIXES = ['get','try','use','go','my','the','pro','one','top','real','true','live','now','fast','smart','easy','quick'];
+const SUFFIXES = ['hq','app','ai','hub','pro','io','ly','fy','ify','base','lab','desk','kit','link','spot'];
+const FINANCE = ['trade','signal','edge','pick','alpha','beta','fund','flow','vault','yield','bull','bear','chart'];
+const TECH = ['data','stack','node','sync','flux','wave','beam','core','grid','loop'];
+
+function generateQuickNames(kw) {
+  const k = kw.toLowerCase().replace(/[^a-z0-9]/g,'');
+  const names = new Set();
+  
+  names.add(k);
+  PREFIXES.slice(0,8).forEach(p => names.add(p+k));
+  SUFFIXES.slice(0,8).forEach(s => names.add(k+s));
+  FINANCE.slice(0,5).forEach(w => {names.add(k+w);names.add(w+k)});
+  
+  if(k.length > 4) {
+    names.add(k.slice(0,4)+'r');
+    names.add(k.slice(0,5));
+  }
+  
+  return [...names].filter(n => n.length >= 3 && n.length <= 12);
+}
+
+function scoreQuick(name) {
+  const len = name.length;
+  if(len <= 5) return {label:'🔥 HOT', cls:'b-hot'};
+  if(len <= 7) return {label:'✓ GOOD', cls:'b-good'};
+  return {label:'OK', cls:'b-ok'};
+}
+
+let quickDomains = [];
+
+function generateQuick() {
+  const kw = document.getElementById('kw-quick').value.trim();
+  if(!kw) return;
+  
+  const names = generateQuickNames(kw);
+  const tlds = [...activeTldsQuick];
+  
+  quickDomains = [];
+  names.forEach(n => {
+    tlds.forEach(t => {
+      quickDomains.push({name: n, tld: t, domain: n+t});
+    });
+  });
+  
+  quickDomains.sort((a,b) => {
+    const tldScore = t => t==='.com'?0:t==='.io'?1:t==='.app'?2:3;
+    return (a.name.length + tldScore(a.tld)) - (b.name.length + tldScore(b.tld));
+  });
+  
+  const top = quickDomains.slice(0, 60);
+  const container = document.getElementById('results-quick');
+  container.innerHTML = '';
+  
+  document.getElementById('count-quick').style.display = 'block';
+  document.getElementById('count-quick').textContent = `${top.length} domains generated`;
+  
+  top.forEach((d, i) => {
+    const score = scoreQuick(d.name);
+    const card = document.createElement('div');
+    card.className = 'domain-card';
+    card.style.animationDelay = `${i * 0.015}s`;
+    card.innerHTML = `
+      <div class="dname">${d.name}<span class="ext">${d.tld}</span></div>
+      <div class="badge ${score.cls}">${score.label}</div>
+      <div class="links">
+        <a href="https://www.namecheap.com/domains/registration/results/?domain=${d.domain}" target="_blank" class="lbtn">NC</a>
+        <a href="https://porkbun.com/checkout/search?q=${d.domain}" target="_blank" class="lbtn">Porkbun</a>
+      </div>
+      <button class="cpbtn" onclick="copyDomain(this,'${d.domain}')">⎘</button>
+    `;
+    container.appendChild(card);
+  });
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// PRO COINS (Domain Hunter Pro)
+// ═══════════════════════════════════════════════════════════════════════════
+const ENDINGS = ['ly','fy','io','ai','r','er','ify','ix','ex','ux','ax','on','in','iq','vy','zy','key','way','lab','hub','co','go','dot','bot','fox','box'];
+const BEGINS = ['ve','ze','ka','xi','vy','ro','mo','lo','ko','jo','ho','go','fo','do','co','bo','zo','vi','zi','li','ki','fi'];
+
+function coinedFromOne(w) {
+  const names = new Set();
+  const clean = w.toLowerCase().replace(/[^a-z]/g,'');
+  
+  for(let i=2;i<=Math.min(clean.length,6);i++){
+    ENDINGS.forEach(e => {
+      const n = clean.slice(0,i)+e;
+      if(n.length>=4&&n.length<=10&&n!==clean) names.add(n);
+    });
+  }
+  
+  const vd = clean.replace(/[aeiou]/g,'').slice(0,8);
+  if(vd.length>=2){
+    ENDINGS.slice(0,10).forEach(e => {
+      const n = vd+e;
+      if(n.length>=4&&n.length<=9) names.add(n);
+    });
+  }
+  
+  BEGINS.slice(0,8).forEach(b => {
+    const n = b+clean;
+    if(n.length>=4&&n.length<=10) names.add(n);
+    for(let i=3;i<=6;i++){
+      const nt = b+clean.slice(0,i);
+      if(nt.length>=4&&nt.length<=9) names.add(nt);
+    }
+  });
+  
+  ['r','x','z','q','v','k'].forEach(l => {
+    const n = clean+l;
+    if(n.length<=8) names.add(n);
+  });
+  
+  return [...names].filter(n=>n.length>=4&&n.length<=10&&n!==clean);
+}
+
+function portmanteau(a, b) {
+  const names = new Set();
+  for(let i=2;i<a.length-1;i++){
+    for(let j=1;j<b.length-1;j++){
+      const n = a.slice(0,i)+b.slice(j);
+      if(n.length>=4&&n.length<=9) names.add(n);
+    }
+  }
+  return [...names];
+}
+
+function scorePro(name) {
+  const l = name.length;
+  const vowels = (name.match(/[aeiou]/g)||[]).length;
+  const pronounceable = /^[bcdfghjklmnpqrstvwxyz]?[aeiou]/.test(name) || vowels/name.length > 0.25;
+  if(l<=5&&pronounceable) return {label:'🔥 HOT',cls:'b-hot',type:'hot'};
+  if(l<=7&&pronounceable) return {label:'✓ GOOD',cls:'b-good',type:'good'};
+  return {label:'OK',cls:'b-ok',type:'ok'};
+}
+
+let proDomains = [];
+let proCurrentTab = 'all';
+
+function generatePro() {
+  const w1 = document.getElementById('kw-pro-1').value.trim().toLowerCase().replace(/[^a-z]/g,'');
+  const w2 = document.getElementById('kw-pro-2').value.trim().toLowerCase().replace(/[^a-z]/g,'');
+  if(!w1) return;
+  
+  const names = new Set();
+  const coined1 = coinedFromOne(w1);
+  coined1.forEach(n => names.add({n, method:'coined'}));
+  
+  if(w2) {
+    const coined2 = coinedFromOne(w2);
+    coined2.forEach(n => names.add({n, method:'coined'}));
+    const port = portmanteau(w1, w2);
+    port.forEach(n => names.add({n, method:'portmanteau'}));
+    const port2 = portmanteau(w2, w1);
+    port2.forEach(n => names.add({n, method:'portmanteau'}));
+  }
+  
+  proDomains = [];
+  const seen = new Set();
+  for(const {n, method} of names) {
+    for(const tld of activeTldsPro) {
+      const domain = n+tld;
+      if(!seen.has(domain)){
+        seen.add(domain);
+        const s = scorePro(n);
+        proDomains.push({name:n, tld, domain, method, score:s});
+      }
+    }
+  }
+  
+  proDomains.sort((a,b) => {
+    const order = {hot:0,good:1,ok:2};
+    const tldOrder = t => t==='.com'?0:t==='.io'?1:t==='.app'?2:t==='.co'?3:4;
+    if(order[a.score.type]!==order[b.score.type]) return order[a.score.type]-order[b.score.type];
+    if(a.name.length!==b.name.length) return a.name.length-b.name.length;
+    return tldOrder(a.tld)-tldOrder(b.tld);
+  });
+  
+  proCurrentTab = 'all';
+  renderProTab('all');
+}
+
+function renderProTab(tab) {
+  let list = proDomains;
+  if(tab==='coined') list = proDomains.filter(d=>d.method==='portmanteau'||d.method==='coined');
+  if(tab==='short') list = proDomains.filter(d=>d.name.length<=6);
+  if(tab==='hot') list = proDomains.filter(d=>d.score.type==='hot');
+  
+  const top = list.slice(0,80);
+  const container = document.getElementById('results-pro');
+  container.innerHTML = '';
+  
+  if(!top.length){
+    container.innerHTML = '<div class="empty">No results for this filter</div>';
+    document.getElementById('count-pro').style.display='none';
+    return;
+  }
+  
+  document.getElementById('count-pro').style.display='block';
+  document.getElementById('count-pro').textContent = `${top.length} coined names`;
+  
+  top.forEach((d,i) => {
+    const card = document.createElement('div');
+    card.className = 'domain-card'+(d.score.type==='hot'?' hot':'');
+    card.style.animationDelay = `${i*0.012}s`;
+    card.innerHTML = `
+      <div class="dname">${d.name}<span class="ext">${d.tld}</span></div>
+      <div class="badge ${d.score.cls}">${d.score.label}</div>
+      <div class="method-tag">${d.method==='portmanteau'?'⊕':'~'}</div>
+      <div class="links">
+        <a href="https://www.namecheap.com/domains/registration/results/?domain=${d.domain}" target="_blank" class="lbtn">NC</a>
+        <a href="https://porkbun.com/checkout/search?q=${d.domain}" target="_blank" class="lbtn">Porkbun</a>
+      </div>
+      <button class="cpbtn" onclick="copyDomain(this,'${d.domain}')">⎘</button>
+    `;
+    container.appendChild(card);
+  });
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// LIVE DNS CHECK
+// ═══════════════════════════════════════════════════════════════════════════
+async function checkDNS(domain) {
+  try {
+    const res = await fetch(
+      `https://cloudflare-dns.com/dns-query?name=${domain}&type=A`,
+      { headers: { Accept: 'application/dns-json' } }
+    );
+    const data = await res.json();
+    if(data.Status === 3) return 'available';
+    if(data.Status === 0) {
+      if(!data.Answer || data.Answer.length === 0) return 'available';
+      return 'taken';
+    }
+    return 'taken';
+  } catch(e) {
+    return 'error';
+  }
+}
+
+function generateCheckNames(kw) {
+  const k = kw.toLowerCase().replace(/[^a-z]/g,'');
+  const names = new Set();
+  
+  const endings = ['r','x','z','vy','fy','ly','iq','io','ax','ex','ix','on','in','ux','zy'];
+  const prefixes = ['ve','ze','ka','ro','mo','lo','ko','vi','zi','li','ki','fi'];
+  
+  for(let i=2;i<=Math.min(k.length,5);i++){
+    endings.forEach(e => {
+      const n = k.slice(0,i)+e;
+      if(n.length>=4&&n.length<=8) names.add(n);
+    });
+  }
+  
+  prefixes.forEach(p => {
+    for(let i=2;i<=Math.min(k.length,5);i++){
+      const n = p+k.slice(0,i);
+      if(n.length>=4&&n.length<=8) names.add(n);
+    }
+  });
+  
+  const vd = k.replace(/[aeiou]/g,'');
+  if(vd.length>=3) {
+    endings.forEach(e => {
+      const n = vd+e;
+      if(n.length>=4&&n.length<=8) names.add(n);
+    });
+  }
+  
+  return [...names].filter(n=>n!==k&&n.length>=3&&n.length<=10);
+}
+
+function autoGenerateForCheck() {
+  const kw = document.getElementById('gen-keyword').value.trim();
+  if(!kw) return;
+  const names = generateCheckNames(kw);
+  document.getElementById('domains-list').value = names.slice(0,30).join(', ');
+}
+
+let dnsRunning = false;
+let dnsStopFlag = false;
+let availCount = 0, takenCount = 0, totalCount = 0;
+
+function updateStats() {
+  document.getElementById('stat-avail').textContent = availCount;
+  document.getElementById('stat-taken').textContent = takenCount;
+  document.getElementById('stat-total').textContent = totalCount;
+}
+
+async function startDNSCheck() {
+  if(dnsRunning){ dnsStopFlag=true; return; }
+  
+  const raw = document.getElementById('domains-list').value;
+  if(!raw.trim()) return;
+  
+  const names = raw.split(/[\n,;]+/).map(s=>s.trim().toLowerCase().replace(/[^a-z0-9]/g,'')).filter(s=>s.length>=2&&s.length<=20);
+  if(!names.length) return;
+  
+  const tlds = [...activeTldsCheck];
+  const domains = [];
+  names.forEach(n => tlds.forEach(t => domains.push({name:n, tld:t, domain:n+t})));
+  
+  dnsRunning = true; dnsStopFlag = false;
+  availCount = 0; takenCount = 0; totalCount = 0;
+  document.getElementById('results-avail').innerHTML = '';
+  document.getElementById('results-taken').innerHTML = '';
+  document.getElementById('avail-section').style.display='none';
+  document.getElementById('taken-section').style.display='none';
+  document.getElementById('progress-bar').style.display='block';
+  document.getElementById('stats-bar').style.display='flex';
+  updateStats();
+  
+  const btn = document.getElementById('check-btn');
+  btn.className = 'btn stop';
+  btn.textContent = '⛔ Stop';
+  
+  let checked = 0;
+  
+  for(const d of domains) {
+    if(dnsStopFlag) break;
+    
+    document.getElementById('status-text').textContent = `Checking ${d.domain}...`;
+    document.getElementById('progress-fill').style.width = `${(checked/domains.length)*100}%`;
+    
+    const result = await checkDNS(d.domain);
+    checked++; totalCount++;
+    
+    if(result === 'available') {
+      availCount++;
+      document.getElementById('avail-section').style.display='block';
+      addDNSCard(d, 'avail', document.getElementById('results-avail'), checked);
+    } else {
+      takenCount++;
+      if(takenCount <= 20) {
+        document.getElementById('taken-section').style.display='block';
+        addDNSCard(d, 'taken', document.getElementById('results-taken'), checked);
+      }
+    }
+    
+    updateStats();
+    await new Promise(r => setTimeout(r, 120));
+  }
+  
+  dnsRunning = false;
+  document.getElementById('progress-fill').style.width = '100%';
+  document.getElementById('status-text').textContent = dnsStopFlag
+    ? `Stopped · ${availCount} available found`
+    : `Done · ${availCount} available out of ${totalCount} checked`;
+  btn.className = 'btn';
+  btn.textContent = 'Check DNS';
+}
+
+function addDNSCard(d, result, container, idx) {
+  const isAvail = result === 'avail';
+  const card = document.createElement('div');
+  card.className = `domain-card ${isAvail ? 'avail' : 'taken'}`;
+  card.style.animationDelay = `${Math.min(idx,20)*0.02}s`;
+  
+  const badge = isAvail
+    ? `<div class="badge b-avail">🟢 AVAILABLE</div>`
+    : `<div class="badge b-taken">✗ taken</div>`;
+  
+  const links = isAvail ? `
+    <div class="links">
+      <a href="https://porkbun.com/checkout/search?q=${d.domain}" target="_blank" class="lbtn">Porkbun</a>
+      <a href="https://www.namecheap.com/domains/registration/results/?domain=${d.domain}" target="_blank" class="lbtn">NC</a>
+    </div>
+    <button class="cpbtn" onclick="copyDomain(this,'${d.domain}')">⎘</button>
+  ` : '';
+  
+  card.innerHTML = `
+    <div class="dname">${d.name}<span class="ext">${d.tld}</span></div>
+    ${badge}
+    ${links}
+  `;
+  container.appendChild(card);
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// UTILITIES
+// ═══════════════════════════════════════════════════════════════════════════
+function copyDomain(btn, domain) {
+  navigator.clipboard.writeText(domain);
+  btn.textContent='✓';
+  btn.classList.add('ok');
+  setTimeout(() => {
+    btn.textContent='⎘';
+    btn.classList.remove('ok');
+  }, 1500);
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════════════════════════════════
+window.onload = () => {
+  initTLDs();
+  
+  // Pre-load examples
+  document.getElementById('kw-quick').value = 'edge';
+  document.getElementById('kw-pro-1').value = 'edge';
+  document.getElementById('kw-pro-2').value = 'trade';
+};
+
+// Keyboard shortcuts
+document.addEventListener('keydown', e => {
+  if(e.key==='Enter'&&(e.ctrlKey||e.metaKey)) {
+    const activeTab = document.querySelector('.tab-content.active');
+    if(activeTab.querySelector('#kw-quick')) generateQuick();
+    if(activeTab.querySelector('#kw-pro-1')) generatePro();
+  }
+});
+</script>
+
 </body>
 </html>
