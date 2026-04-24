@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Domain Hunter</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  background:#080810;
+  font-family:'Outfit',sans-serif;
+  color:#fff;
+  min-height:100vh;
+  padding:32px 16px;
+}
+
+h1{
+  font-size:11px;letter-spacing:3px;color:#333355;
+  text-transform:uppercase;text-align:center;margin-bottom:6px;
+}
+h2{
+  font-size:24px;font-weight:800;text-align:center;
+  background:linear-gradient(135deg,#00e676,#00bcd4);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  margin-bottom:4px;
+}
+.sub{font-size:12px;color:#333355;text-align:center;margin-bottom:28px}
+
+/* Controls */
+.controls{
+  max-width:600px;margin:0 auto 24px;
+  display:flex;flex-direction:column;gap:10px;
+}
+.input-row{display:flex;gap:8px}
+input[type=text]{
+  flex:1;
+  background:#111120;
+  border:1px solid #1e1e35;
+  border-radius:10px;
+  color:#fff;
+  font-family:'Outfit',sans-serif;
+  font-size:14px;
+  padding:12px 16px;
+  outline:none;
+  transition:border-color 0.15s;
+}
+input[type=text]:focus{border-color:#00e67644}
+input[type=text]::placeholder{color:#333355}
+
+.gen-btn{
+  background:linear-gradient(135deg,#00e676,#00bcd4);
+  border:none;border-radius:10px;
+  color:#000;font-weight:700;font-size:13px;
+  font-family:'Outfit',sans-serif;
+  padding:12px 20px;cursor:pointer;
+  white-space:nowrap;
+  transition:opacity 0.15s;
+}
+.gen-btn:hover{opacity:0.85}
+.gen-btn:disabled{opacity:0.4;cursor:default}
+
+/* TLD filter */
+.tld-row{display:flex;gap:6px;flex-wrap:wrap}
+.tld-btn{
+  padding:5px 12px;border-radius:20px;
+  font-size:11px;font-weight:500;
+  border:1px solid #1e1e35;
+  background:transparent;color:#444466;
+  cursor:pointer;font-family:'Outfit',sans-serif;
+  transition:all 0.1s;
+}
+.tld-btn.on{
+  background:#00e67618;
+  border-color:#00e67644;
+  color:#00e676;
+}
+
+/* Results */
+.results{
+  max-width:600px;margin:0 auto;
+  display:flex;flex-direction:column;gap:6px;
+}
+
+.domain-card{
+  background:#111120;
+  border:1px solid #1e1e35;
+  border-radius:12px;
+  padding:12px 16px;
+  display:flex;align-items:center;gap:12px;
+  animation:fadeIn 0.2s ease forwards;
+  opacity:0;
+}
+@keyframes fadeIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+
+.domain-name{
+  flex:1;
+  font-family:'JetBrains Mono',monospace;
+  font-size:15px;font-weight:600;
+  color:#e0e0f0;
+}
+.domain-name .tld{color:#444466;font-weight:400}
+
+.domain-score{
+  font-size:10px;
+  padding:3px 8px;border-radius:6px;
+  font-weight:600;letter-spacing:0.5px;
+}
+.score-hot{background:#00e67618;color:#00e676;border:1px solid #00e67633}
+.score-good{background:#ffab4018;color:#ffab40;border:1px solid #ffab4033}
+.score-ok{background:#444;color:#888;border:1px solid #555}
+
+.buy-links{display:flex;gap:5px;flex-shrink:0}
+.buy-btn{
+  padding:6px 11px;
+  border-radius:8px;
+  font-size:11px;font-weight:600;
+  font-family:'Outfit',sans-serif;
+  text-decoration:none;
+  border:1px solid #1e1e35;
+  color:#555577;
+  transition:all 0.1s;
+  white-space:nowrap;
+}
+.buy-btn:hover{border-color:#00e67644;color:#00e676}
+.buy-btn.primary{
+  background:#00e67618;
+  border-color:#00e67644;
+  color:#00e676;
+}
+
+.copy-btn{
+  background:transparent;
+  border:1px solid #1e1e35;
+  border-radius:8px;
+  color:#333355;
+  padding:6px 10px;
+  cursor:pointer;
+  font-size:12px;
+  transition:all 0.1s;
+}
+.copy-btn:hover{border-color:#444;color:#888}
+.copy-btn.copied{color:#00e676;border-color:#00e67633}
+
+/* Empty / loading */
+.empty{
+  text-align:center;
+  padding:40px;
+  color:#222240;
+  font-size:13px;
+  line-height:2;
+}
+
+/* Section label */
+.section-label{
+  font-size:9px;letter-spacing:2px;color:#222240;
+  text-transform:uppercase;padding:4px 0;
+  max-width:600px;margin:8px auto 2px;
+}
+.count{
+  font-size:11px;color:#333355;
+  text-align:center;margin-bottom:12px;
+}
+
+@keyframes spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+.spinner{
+  display:inline-block;
+  width:14px;height:14px;
+  border:2px solid #333355;
+  border-top-color:#00e676;
+  border-radius:50%;
+  animation:spin 0.6s linear infinite;
+  vertical-align:middle;
+  margin-right:6px;
+}
+</style>
+</head>
+<body>
+
+<h1>Domain Hunter</h1>
+<h2>Find Your \$10 Name</h2>
+<div class="sub">Generate brandable domains · Check price · Buy instantly</div>
+
+<div class="controls">
+  <div class="input-row">
+    <input type="text" id="keyword" placeholder="Keyword or niche (ex: edge, signal, pick, trade...)" />
+    <button class="gen-btn" id="genBtn" onclick="generate()">Generate ⚡</button>
+  </div>
+  <div class="tld-row" id="tldRow"></div>
+</div>
+
+<div id="countRow" class="count" style="display:none"></div>
+<div id="results" class="results">
+  <div class="empty">Enter a keyword above<br>and generate domain ideas instantly</div>
+</div>
+
+<script>
+const TLDS = ['.com','.io','.app','.co','.xyz','.ai','.net','.gg','.pro','.dev'];
+const activeTlds = new Set(['.com','.io','.app','.co']);
+
+// Render TLD filters
+const tldRow = document.getElementById('tldRow');
+TLDS.forEach(t => {
+  const b = document.createElement('button');
+  b.className = 'tld-btn' + (activeTlds.has(t) ? ' on' : '');
+  b.textContent = t;
+  b.onclick = () => {
+    if(activeTlds.has(t)) activeTlds.delete(t);
+    else activeTlds.add(t);
+    b.className = 'tld-btn' + (activeTlds.has(t) ? ' on' : '');
+  };
+  tldRow.appendChild(b);
+});
+
+// Name generators
+const PREFIXES = ['get','try','use','go','my','the','pro','one','top','real','true','live','now','fast','smart','easy','quick','meta','ultra'];
+const SUFFIXES = ['hq','app','ai','hub','pro','io','ly','fy','ify','base','lab','labs','desk','dash','kit','box','link','spot'];
+const FINANCE_WORDS = ['trade','signal','edge','pick','alpha','beta','quant','fund','flow','vault','gain','yield','bull','bear','chart','trend','scan','alert','pulse','spike'];
+const TECH_WORDS = ['data','stack','node','sync','flux','shift','wave','beam','core','grid','loop','path','root','byte','dash'];
+
+function variations(kw) {
+  const k = kw.toLowerCase().replace(/[^a-z0-9]/g,'');
+  const names = new Set();
+
+  // Direct + tld combos → checked via links
+  names.add(k);
+
+  // Prefix combos
+  PREFIXES.slice(0,8).forEach(p => names.add(p+k));
+  // Suffix combos
+  SUFFIXES.slice(0,8).forEach(s => names.add(k+s));
+  // Finance context
+  FINANCE_WORDS.slice(0,6).forEach(w => {
+    names.add(k+w);
+    names.add(w+k);
+  });
+  // Short truncations
+  if(k.length > 4) {
+    names.add(k.slice(0,4)+'r');
+    names.add(k.slice(0,5));
+    names.add(k.slice(0,3)+'r');
+  }
+  // Double combos from finance + tech
+  for(let i=0;i<4;i++){
+    for(let j=0;j<4;j++){
+      if(FINANCE_WORDS[i] !== k && TECH_WORDS[j] !== k){
+        names.add(FINANCE_WORDS[i]+TECH_WORDS[j]);
+      }
+    }
+  }
+  // Remove the raw keyword itself (too generic)
+  names.delete(k.length <= 2 ? '' : '');
+
+  return [...names].filter(n => n.length >= 3 && n.length <= 12);
+}
+
+function scoreTag(name) {
+  const len = name.length;
+  if(len <= 5) return {label:'🔥 HOT', cls:'score-hot'};
+  if(len <= 7) return {label:'✓ GOOD', cls:'score-good'};
+  return {label:'OK', cls:'score-ok'};
+}
+
+function namecheapUrl(domain) {
+  return `https://www.namecheap.com/domains/registration/results/?domain=${encodeURIComponent(domain)}`;
+}
+function godaddyUrl(domain) {
+  return `https://www.godaddy.com/domainsearch/find?domainToCheck=${encodeURIComponent(domain)}`;
+}
+function porkbunUrl(domain) {
+  return `https://porkbun.com/checkout/search?q=${encodeURIComponent(domain)}`;
+}
+
+let allDomains = [];
+
+function generate() {
+  const kw = document.getElementById('keyword').value.trim();
+  if(!kw) return;
+
+  const btn = document.getElementById('genBtn');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span>Generating...';
+
+  const container = document.getElementById('results');
+  container.innerHTML = '';
+
+  const names = variations(kw);
+  const tlds = [...activeTlds];
+
+  allDomains = [];
+  names.forEach(n => {
+    tlds.forEach(t => {
+      allDomains.push({ name: n, tld: t, domain: n+t });
+    });
+  });
+
+  // Sort: shorter names first, .com before others
+  allDomains.sort((a,b) => {
+    const tldScore = t => t==='.com'?0:t==='.io'?1:t==='.app'?2:3;
+    return (a.name.length + tldScore(a.tld)) - (b.name.length + tldScore(b.tld));
+  });
+
+  const top = allDomains.slice(0, 60);
+
+  document.getElementById('countRow').style.display = 'block';
+  document.getElementById('countRow').textContent = `${top.length} domain candidates generated — click to check availability`;
+
+  top.forEach((d, i) => {
+    const score = scoreTag(d.name);
+    const card = document.createElement('div');
+    card.className = 'domain-card';
+    card.style.animationDelay = `${i * 0.015}s`;
+    card.innerHTML = `
+      <div class="domain-name">${d.name}<span class="tld">${d.tld}</span></div>
+      <div class="domain-score ${score.cls}">${score.label}</div>
+      <div class="buy-links">
+        <a href="${namecheapUrl(d.domain)}" target="_blank" class="buy-btn primary">Namecheap</a>
+        <a href="${porkbunUrl(d.domain)}" target="_blank" class="buy-btn">Porkbun</a>
+        <a href="${godaddyUrl(d.domain)}" target="_blank" class="buy-btn">GoDaddy</a>
+      </div>
+      <button class="copy-btn" onclick="copyDomain(this,'${d.domain}')">⎘</button>
+    `;
+    container.appendChild(card);
+  });
+
+  btn.disabled = false;
+  btn.innerHTML = 'Generate ⚡';
+}
+
+function copyDomain(btn, domain) {
+  navigator.clipboard.writeText(domain);
+  btn.textContent = '✓';
+  btn.classList.add('copied');
+  setTimeout(() => {
+    btn.textContent = '⎘';
+    btn.classList.remove('copied');
+  }, 1500);
+}
+
+// Enter key
+document.getElementById('keyword').addEventListener('keydown', e => {
+  if(e.key === 'Enter') generate();
+});
+
+// Pre-load with trading niche
+window.onload = () => {
+  document.getElementById('keyword').value = 'edge';
+  generate();
+};
+</script>
+</body>
+</html>

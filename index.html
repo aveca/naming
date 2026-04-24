@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Domain Naming Suite</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#080810;font-family:'Outfit',sans-serif;color:#fff;min-height:100vh;padding:40px 16px}
+.container{max-width:800px;margin:0 auto}
+.header{text-align:center;margin-bottom:50px}
+h1{font-size:12px;letter-spacing:3px;color:#2a2a45;text-transform:uppercase;margin-bottom:10px}
+h2{font-size:32px;font-weight:800;background:linear-gradient(135deg,#00e676,#00bcd4);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:8px}
+.tagline{font-size:14px;color:#2a2a45;margin-bottom:20px}
+.tools-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-bottom:40px}
+.tool-card{background:#111120;border:1px solid #1e1e35;border-radius:14px;padding:24px;text-decoration:none;color:inherit;transition:all 0.2s;cursor:pointer}
+.tool-card:hover{border-color:#00e67644;background:#0f0f1e;transform:translateY(-2px)}
+.tool-icon{font-size:32px;margin-bottom:12px}
+.tool-title{font-size:16px;font-weight:700;margin-bottom:8px;color:#e0e0f0}
+.tool-desc{font-size:12px;color:#333355;line-height:1.6}
+.footer{text-align:center;color:#1a1a28;font-size:11px;margin-top:30px}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>Domain Naming Suite</h1>
+    <h2>Find Your Perfect Domain</h2>
+    <p class="tagline">Three specialized tools for domain discovery and availability checking</p>
+  </div>
+
+  <div class="tools-grid">
+    <a href="domain-hunter.html" class="tool-card">
+      <div class="tool-icon">⚡</div>
+      <div class="tool-title">Domain Hunter</div>
+      <div class="tool-desc">Generate brandable domains from keywords. Quick price check on Namecheap, Porkbun & GoDaddy.</div>
+    </a>
+
+    <a href="domain-hunter-pro.html" class="tool-card">
+      <div class="tool-icon">🔬</div>
+      <div class="tool-title">Domain Hunter Pro</div>
+      <div class="tool-desc">Coined names like Spotify & Revolut. Portmanteau generation + pronunciation scoring.</div>
+    </a>
+
+    <a href="domain-checker-live.html" class="tool-card">
+      <div class="tool-icon">🟢</div>
+      <div class="tool-title">Live DNS Checker</div>
+      <div class="tool-desc">Real availability check via Cloudflare DNS. Batch check multiple domains instantly.</div>
+    </a>
+  </div>
+
+  <div class="footer">
+    <p>All tools check real availability via Cloudflare DNS &amp; registrar APIs<br>No WHOIS lookups — Privacy first</p>
+  </div>
+</div>
+</body>
+</html>

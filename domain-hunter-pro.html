@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Domain Hunter Pro</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#080810;font-family:'Outfit',sans-serif;color:#fff;min-height:100vh;padding:28px 16px}
+h1{font-size:10px;letter-spacing:3px;color:#2a2a45;text-transform:uppercase;text-align:center;margin-bottom:5px}
+h2{font-size:22px;font-weight:800;text-align:center;background:linear-gradient(135deg,#00e676,#00bcd4);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:3px}
+.sub{font-size:11px;color:#2a2a45;text-align:center;margin-bottom:22px}
+.controls{max-width:640px;margin:0 auto 18px;display:flex;flex-direction:column;gap:8px}
+.row{display:flex;gap:8px;flex-wrap:wrap}
+input[type=text]{flex:1;min-width:160px;background:#111120;border:1px solid #1e1e35;border-radius:10px;color:#fff;font-family:'Outfit',sans-serif;font-size:14px;padding:11px 14px;outline:none}
+input[type=text]:focus{border-color:#00e67644}
+input[type=text]::placeholder{color:#2a2a45}
+.btn{background:linear-gradient(135deg,#00e676,#00bcd4);border:none;border-radius:10px;color:#000;font-weight:700;font-size:12px;font-family:'Outfit',sans-serif;padding:11px 18px;cursor:pointer;white-space:nowrap}
+.btn:disabled{opacity:0.4;cursor:default}
+.btn.sec{background:#111120;border:1px solid #1e1e35;color:#444466}
+.btn.sec:hover{border-color:#2a2a4a;color:#6666aa}
+.tld-row{display:flex;gap:5px;flex-wrap:wrap}
+.tld-btn{padding:4px 10px;border-radius:20px;font-size:10px;font-weight:500;border:1px solid #1e1e35;background:transparent;color:#2a2a45;cursor:pointer;font-family:'Outfit',sans-serif}
+.tld-btn.on{background:#00e67615;border-color:#00e67640;color:#00e676}
+.tabs{max-width:640px;margin:0 auto 14px;display:flex;gap:2px;background:#0d0d18;border:1px solid #1e1e35;border-radius:10px;padding:3px}
+.tab{flex:1;padding:7px;text-align:center;font-size:11px;font-weight:600;color:#2a2a45;cursor:pointer;border-radius:8px;transition:all 0.15s;letter-spacing:0.5px}
+.tab.active{background:#111120;color:#00e676}
+.results{max-width:640px;margin:0 auto;display:flex;flex-direction:column;gap:5px}
+.domain-card{background:#0f0f1e;border:1px solid #1a1a30;border-radius:11px;padding:11px 14px;display:flex;align-items:center;gap:10px;animation:fi 0.2s ease forwards;opacity:0}
+@keyframes fi{from{opacity:0;transform:translateY(3px)}to{opacity:1;transform:none}}
+.domain-card:hover{border-color:#2a2a4a}
+.domain-card.hot{border-color:#00e67625;background:#0a1a10}
+.dname{flex:1;font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:600;color:#d0d0e8}
+.dname .ext{color:#2a2a45;font-weight:400}
+.badge{font-size:9px;padding:3px 7px;border-radius:5px;font-weight:600;letter-spacing:0.5px;flex-shrink:0}
+.b-hot{background:#00e67618;color:#00e676;border:1px solid #00e67630}
+.b-good{background:#ffab4015;color:#ffab40;border:1px solid #ffab4030}
+.b-ok{background:#ffffff08;color:#333355;border:1px solid #ffffff10}
+.links{display:flex;gap:4px;flex-shrink:0}
+.lbtn{padding:5px 9px;border-radius:7px;font-size:10px;font-weight:600;font-family:'Outfit',sans-serif;text-decoration:none;border:1px solid #1a1a30;color:#2a2a45;transition:all 0.1s;white-space:nowrap}
+.lbtn:hover{border-color:#00e67640;color:#00e676}
+.lbtn.p{background:#00e67615;border-color:#00e67640;color:#00e676}
+.cpbtn{background:transparent;border:1px solid #1a1a30;border-radius:7px;color:#2a2a45;padding:5px 9px;cursor:pointer;font-size:11px}
+.cpbtn:hover{color:#888}
+.cpbtn.ok{color:#00e676;border-color:#00e67630}
+.empty{text-align:center;padding:40px;color:#1a1a30;font-size:12px;line-height:2.2}
+.count{font-size:10px;color:#2a2a45;text-align:center;margin-bottom:10px}
+.method-tag{font-size:9px;color:#1e1e35;font-family:'JetBrains Mono',monospace;flex-shrink:0}
+.section-head{font-size:9px;letter-spacing:2px;color:#1e1e35;text-transform:uppercase;max-width:640px;margin:10px auto 4px}
+@keyframes spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+.spin{display:inline-block;width:12px;height:12px;border:2px solid #1e1e35;border-top-color:#00e676;border-radius:50%;animation:spin 0.6s linear infinite;vertical-align:middle;margin-right:5px}
+</style>
+</head>
+<body>
+
+<h1>Domain Hunter Pro</h1>
+<h2>Coined Names · Likely Available</h2>
+<div class="sub">Not generic combos — invented words like Spotify, Robinhood, Revolut</div>
+
+<div class="controls">
+  <div class="row">
+    <input type="text" id="kw1" placeholder="Word 1 (ex: edge, trade, signal)" />
+    <input type="text" id="kw2" placeholder="Word 2 optional (ex: hunt, flow, scan)" />
+    <button class="btn" onclick="generate()" id="genBtn">Generate ⚡</button>
+  </div>
+  <div class="tld-row" id="tldRow"></div>
+</div>
+
+<div class="tabs">
+  <div class="tab active" onclick="switchTab('all',this)">All</div>
+  <div class="tab" onclick="switchTab('coined',this)">🔬 Coined</div>
+  <div class="tab" onclick="switchTab('short',this)">⚡ Short ≤6</div>
+  <div class="tab" onclick="switchTab('hot',this)">🔥 Hot only</div>
+</div>
+
+<div id="countRow" class="count" style="display:none"></div>
+<div id="results" class="results">
+  <div class="empty">Enter keywords above<br><br>
+    <span style="color:#111128;font-size:11px">
+    Strategy: invent words like<br>
+    Tradify · Edgr · Signlr · Quavio · Travio<br>
+    instead of taken generics
+    </span>
+  </div>
+</div>
+
+<script>
+// ── CONFIG ──────────────────────────────────────────────────
+const TLDS = ['.com','.io','.app','.co','.ai','.xyz','.gg','.pro','.net','.dev'];
+const active = new Set(['.com','.io','.app','.co']);
+
+const tldRow = document.getElementById('tldRow');
+TLDS.forEach(t => {
+  const b = document.createElement('button');
+  b.className = 'tld-btn'+(active.has(t)?' on':'');
+  b.textContent = t;
+  b.onclick = () => {
+    active.has(t)?active.delete(t):active.add(t);
+    b.className = 'tld-btn'+(active.has(t)?' on':'');
+  };
+  tldRow.appendChild(b);
+});
+
+// ── COINED WORD ENGINE ──────────────────────────────────────
+// Spotify = Spot+ify | Robinhood = Robin+hood | Revolut = Revol+ut
+// Strategy: truncate + join + mutate
+
+function truncate(w, n) { return w.slice(0, n); }
+function vowelDrop(w) { return w.replace(/[aeiou]/g,'').slice(0,8); }
+function consonantKeep(w) {
+  const c = w.split('').filter((_,i) => !'aeiou'.includes(w[i]));
+  return c.join('').slice(0,6);
+}
+
+const ENDINGS = ['ly','fy','io','ai','r','er','ify','ix','ex','ux','ax','on','in','iq','vy','zy','sy','ry','ny','key','way','bay','ray','pay','day','lab','hub','co','go','so','dot','bot','fox','box','ox'];
+const BEGINNINGS = ['ve','ze','ka','xi','vy','ro','mo','lo','ko','jo','ho','go','fo','do','co','bo','ao','zo','vi','zi','li','ki','fi','di','ci','bi','ai'];
+const MIDDLES = ['av','ev','ov','uv','ax','ex','ix','ox','ux','al','el','il','ol','ul','an','en','in','on','un'];
+
+function portmanteau(a, b) {
+  const names = new Set();
+  // Classic: first half of a + second half of b
+  for(let i=2;i<a.length-1;i++){
+    for(let j=1;j<b.length-1;j++){
+      const n = a.slice(0,i)+b.slice(j);
+      if(n.length>=4&&n.length<=9) names.add(n);
+    }
+  }
+  return [...names];
+}
+
+function coinedFromOne(w) {
+  const names = new Set();
+  const clean = w.toLowerCase().replace(/[^a-z]/g,'');
+
+  // Truncate + endings
+  for(let i=2;i<=Math.min(clean.length,6);i++){
+    ENDINGS.forEach(e => {
+      const n = clean.slice(0,i)+e;
+      if(n.length>=4&&n.length<=10&&n!==clean) names.add(n);
+    });
+  }
+
+  // Vowel drop + ending
+  const vd = vowelDrop(clean);
+  if(vd.length>=2){
+    ENDINGS.slice(0,10).forEach(e => {
+      const n = vd+e;
+      if(n.length>=4&&n.length<=9) names.add(n);
+    });
+  }
+
+  // Beginning + word
+  BEGINNINGS.slice(0,8).forEach(b => {
+    const n = b+clean;
+    if(n.length>=4&&n.length<=10) names.add(n);
+    // Beginning + truncated word
+    for(let i=3;i<=6;i++){
+      const nt = b+clean.slice(0,i);
+      if(nt.length>=4&&nt.length<=9) names.add(nt);
+    }
+  });
+
+  // Word + single letter mutation
+  ['r','x','z','q','v','k'].forEach(l => {
+    const n = clean+l;
+    if(n.length<=8) names.add(n);
+    // Drop last vowel + letter
+    const stripped = clean.replace(/[aeiou]+\$/,'');
+    if(stripped!==clean) names.add(stripped+l);
+  });
+
+  // Internal vowel swap
+  const swapped = clean.replace(/a/g,'e').replace(/o/g,'a');
+  if(swapped!==clean&&swapped.length>=4) names.add(swapped);
+
+  // Double vowel removal
+  const novowel = clean.replace(/[aeiou]/g,'');
+  if(novowel.length>=3) {
+    ENDINGS.slice(0,5).forEach(e => names.add(novowel+e));
+  }
+
+  return [...names].filter(n=>n.length>=4&&n.length<=10&&n!==clean);
+}
+
+function score(name) {
+  const l = name.length;
+  const pronounceable = /^[bcdfghjklmnpqrstvwxyz]?[aeiou]/.test(name) || countVowels(name)/name.length > 0.25;
+  if(l<=5&&pronounceable) return {label:'🔥 HOT',cls:'b-hot',type:'hot'};
+  if(l<=7&&pronounceable) return {label:'✓ GOOD',cls:'b-good',type:'good'};
+  return {label:'OK',cls:'b-ok',type:'ok'};
+}
+
+function countVowels(s){return (s.match(/[aeiou]/g)||[]).length}
+
+function isCoinedWord(name, originals) {
+  return !originals.some(o => name === o || name.startsWith(o) && name.length === o.length+1);
+}
+
+// ── GENERATE ────────────────────────────────────────────────
+let allDomains = [];
+let currentTab = 'all';
+
+function generate() {
+  const w1 = document.getElementById('kw1').value.trim().toLowerCase().replace(/[^a-z]/g,'');
+  const w2 = document.getElementById('kw2').value.trim().toLowerCase().replace(/[^a-z]/g,'');
+  if(!w1) return;
+
+  const btn = document.getElementById('genBtn');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spin"></span>Generating...';
+
+  const names = new Set();
+  const coined1 = coinedFromOne(w1);
+  coined1.forEach(n => names.add({n, method:'coined'}));
+
+  if(w2) {
+    const coined2 = coinedFromOne(w2);
+    coined2.forEach(n => names.add({n, method:'coined'}));
+    const port = portmanteau(w1, w2);
+    port.forEach(n => names.add({n, method:'portmanteau'}));
+    const port2 = portmanteau(w2, w1);
+    port2.forEach(n => names.add({n, method:'portmanteau'}));
+  }
+
+  // Build domain list
+  allDomains = [];
+  const seen = new Set();
+  for(const {n, method} of names) {
+    for(const tld of active) {
+      const domain = n+tld;
+      if(!seen.has(domain)){
+        seen.add(domain);
+        const s = score(n);
+        allDomains.push({name:n, tld, domain, method, score:s});
+      }
+    }
+  }
+
+  // Sort: hot first, then shorter
+  allDomains.sort((a,b) => {
+    const order = {hot:0,good:1,ok:2};
+    const tldOrder = t => t==='.com'?0:t==='.io'?1:t==='.app'?2:t==='.co'?3:4;
+    if(order[a.score.type]!==order[b.score.type]) return order[a.score.type]-order[b.score.type];
+    if(a.name.length!==b.name.length) return a.name.length-b.name.length;
+    return tldOrder(a.tld)-tldOrder(b.tld);
+  });
+
+  renderTab(currentTab);
+  btn.disabled = false;
+  btn.innerHTML = 'Generate ⚡';
+}
+
+function switchTab(tab, el) {
+  currentTab = tab;
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+  renderTab(tab);
+}
+
+function renderTab(tab) {
+  let list = allDomains;
+  if(tab==='coined') list = allDomains.filter(d=>d.method==='portmanteau'||d.method==='coined');
+  if(tab==='short') list = allDomains.filter(d=>d.name.length<=6);
+  if(tab==='hot') list = allDomains.filter(d=>d.score.type==='hot');
+
+  const top = list.slice(0,80);
+  const container = document.getElementById('results');
+  container.innerHTML = '';
+
+  if(!top.length){
+    container.innerHTML = '<div class="empty">No results for this filter</div>';
+    document.getElementById('countRow').style.display='none';
+    return;
+  }
+
+  document.getElementById('countRow').style.display='block';
+  document.getElementById('countRow').textContent = `${top.length} coined names — click registrar to check availability & price`;
+
+  top.forEach((d,i) => {
+    const card = document.createElement('div');
+    card.className = 'domain-card'+(d.score.type==='hot'?' hot':'');
+    card.style.animationDelay = `${i*0.012}s`;
+    card.innerHTML = `
+      <div class="dname">${d.name}<span class="ext">${d.tld}</span></div>
+      <div class="badge ${d.score.cls}">${d.score.label}</div>
+      <div class="method-tag">${d.method==='portmanteau'?'⊕':'~'}</div>
+      <div class="links">
+        <a href="https://porkbun.com/checkout/search?q=${d.domain}" target="_blank" class="lbtn p">Porkbun</a>
+        <a href="https://www.namecheap.com/domains/registration/results/?domain=${d.domain}" target="_blank" class="lbtn">NC</a>
+        <a href="https://www.godaddy.com/domainsearch/find?domainToCheck=${d.domain}" target="_blank" class="lbtn">GD</a>
+      </div>
+      <button class="cpbtn" onclick="cp(this,'${d.domain}')">⎘</button>
+    `;
+    container.appendChild(card);
+  });
+}
+
+function cp(btn, domain) {
+  navigator.clipboard.writeText(domain);
+  btn.textContent='✓';btn.classList.add('ok');
+  setTimeout(()=>{btn.textContent='⎘';btn.classList.remove('ok')},1500);
+}
+
+document.addEventListener('keydown', e => {
+  if(e.key==='Enter') generate();
+});
+
+// Pre-load
+window.onload = () => {
+  document.getElementById('kw1').value = 'edge';
+  document.getElementById('kw2').value = 'trade';
+  generate();
+};
+</script>
+</body>
+</html>
