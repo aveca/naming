@@ -2,85 +2,122 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#080810">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <title>Domain Naming Suite</title>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
+html,body{width:100%;height:100%}
 body{
   background:#080810;
   font-family:'Outfit',sans-serif;
   color:#fff;
   min-height:100vh;
-  padding:20px 16px;
+  padding:12px;
+  display:flex;
+  flex-direction:column;
+  -webkit-touch-callout:none;
+  -webkit-user-select:none;
+  user-select:none;
 }
 
-.container{max-width:900px;margin:0 auto}
+.container{
+  flex:1;
+  max-width:900px;
+  margin:0 auto;
+  width:100%;
+  display:flex;
+  flex-direction:column;
+  overflow:hidden;
+}
 
 /* Header */
-.header{text-align:center;margin-bottom:30px}
-h1{font-size:11px;letter-spacing:3px;color:#2a2a45;text-transform:uppercase;margin-bottom:8px}
-h2{font-size:28px;font-weight:800;background:linear-gradient(135deg,#00e676,#00bcd4);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:6px}
-.tagline{font-size:13px;color:#2a2a45}
+.header{margin-bottom:12px;text-align:center}
+h1{font-size:9px;letter-spacing:2px;color:#2a2a45;text-transform:uppercase;margin-bottom:4px}
+h2{font-size:20px;font-weight:800;background:linear-gradient(135deg,#00e676,#00bcd4);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:2px;line-height:1.2}
+.tagline{font-size:11px;color:#2a2a45}
 
 /* Tabs */
 .tabs{
-  display:flex;gap:2px;background:#0d0d18;border:1px solid #1e1e35;border-radius:12px;padding:3px;margin-bottom:24px;flex-wrap:wrap
+  display:flex;gap:2px;background:#0d0d18;border:1px solid #1e1e35;border-radius:10px;padding:2px;margin-bottom:12px;overflow-x:auto;-webkit-overflow-scrolling:touch
 }
 .tab{
-  flex:1;min-width:130px;padding:10px 14px;text-align:center;font-size:12px;font-weight:600;color:#2a2a45;cursor:pointer;border-radius:10px;transition:all 0.15s;letter-spacing:0.5px;white-space:nowrap;border:none;background:transparent
+  flex:0 0 auto;
+  padding:8px 10px;
+  text-align:center;
+  font-size:11px;
+  font-weight:600;
+  color:#2a2a45;
+  cursor:pointer;
+  border-radius:8px;
+  transition:all 0.15s;
+  letter-spacing:0.4px;
+  white-space:nowrap;
+  border:none;
+  background:transparent;
+  min-width:90px
 }
 .tab.active{background:#111120;color:#00e676;border:1px solid #1e1e35}
-.tab:hover{color:#00e676}
 
 /* Tab content */
-.tab-content{display:none}
-.tab-content.active{display:block;animation:fadeIn 0.2s ease}
+.tab-content{display:none;flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch}
+.tab-content.active{display:flex;flex-direction:column;animation:fadeIn 0.2s ease}
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
 
 /* Tool sections */
-.tool-section{margin-bottom:28px}
-.section-title{font-size:13px;font-weight:700;color:#e0e0f0;margin-bottom:14px;display:flex;align-items:center;gap:6px}
-.section-title .icon{font-size:16px}
+.tool-section{margin-bottom:12px;flex:1;display:flex;flex-direction:column}
+.section-title{font-size:12px;font-weight:700;color:#e0e0f0;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.section-title .icon{font-size:14px}
 
 /* Inputs & Controls */
-.controls{display:flex;flex-direction:column;gap:10px;margin-bottom:16px}
-.row{display:flex;gap:8px;flex-wrap:wrap}
+.controls{display:flex;flex-direction:column;gap:8px;margin-bottom:12px}
+.row{display:flex;gap:6px;flex-wrap:wrap;align-items:stretch}
 input[type=text]{
-  flex:1;min-width:150px;
-  background:#111120;border:1px solid #1e1e35;border-radius:10px;
-  color:#fff;font-family:'Outfit',sans-serif;font-size:13px;
-  padding:11px 14px;outline:none;transition:border-color 0.15s
+  flex:1;min-width:100px;
+  background:#111120;border:1px solid #1e1e35;border-radius:8px;
+  color:#fff;font-family:'Outfit',sans-serif;font-size:12px;
+  padding:9px 12px;outline:none;transition:border-color 0.15s;
+  -webkit-appearance:none;appearance:none;
+  border-radius:8px
 }
 input[type=text]:focus{border-color:#00e67644}
 input[type=text]::placeholder{color:#333355}
 
 .btn{
   background:linear-gradient(135deg,#00e676,#00bcd4);
-  border:none;border-radius:10px;
-  color:#000;font-weight:700;font-size:12px;
+  border:none;border-radius:8px;
+  color:#000;font-weight:700;font-size:11px;
   font-family:'Outfit',sans-serif;
-  padding:11px 18px;cursor:pointer;white-space:nowrap;
-  transition:opacity 0.15s;border:none;flex-shrink:0
+  padding:9px 14px;cursor:pointer;white-space:nowrap;
+  transition:opacity 0.15s;flex-shrink:0;
+  -webkit-appearance:none;appearance:none;
+  -webkit-tap-highlight-color:transparent;
+  touch-action:manipulation
 }
-.btn:hover{opacity:0.85}
+.btn:active{opacity:0.7}
 .btn:disabled{opacity:0.4;cursor:default}
 
 .btn.secondary{
-  background:#111120;border:1px solid #1e1e35;color:#444466;
+  background:#111120;border:1px solid #1e1e35;color:#444466;padding:8px 12px;font-size:10px;flex:1;min-width:60px
 }
-.btn.secondary:hover{border-color:#2a2a4a;color:#6666aa}
+.btn.secondary:active{border-color:#2a2a4a;color:#6666aa}
 
 .btn.stop{background:#ff444418;border:1px solid #ff444430;color:#ff4444}
 
 /* TLD buttons */
-.tld-row{display:flex;gap:5px;flex-wrap:wrap;margin-top:8px}
+.tld-row{display:flex;gap:4px;flex-wrap:wrap;margin-top:6px}
 .tld-btn{
-  padding:5px 11px;border-radius:20px;
-  font-size:10px;font-weight:500;
+  padding:4px 8px;border-radius:16px;
+  font-size:9px;font-weight:500;
   border:1px solid #1e1e35;background:transparent;color:#2a2a45;
   cursor:pointer;font-family:'Outfit',sans-serif;
-  transition:all 0.1s
+  transition:all 0.1s;flex-shrink:0;
+  -webkit-appearance:none;appearance:none;
+  -webkit-tap-highlight-color:transparent;
+  touch-action:manipulation
 }
 .tld-btn.on{
   background:#00e67615;border-color:#00e67635;color:#00e676
@@ -88,13 +125,17 @@ input[type=text]::placeholder{color:#333355}
 
 /* Results Grid */
 .results{
-  display:flex;flex-direction:column;gap:5px;
+  display:flex;flex-direction:column;gap:4px;
+  flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch
 }
 
 .domain-card{
-  background:#0f0f1e;border:1px solid #1a1a30;border-radius:11px;
-  padding:11px 14px;display:flex;align-items:center;gap:10px;
-  animation:slideIn 0.2s ease forwards;opacity:0
+  background:#0f0f1e;border:1px solid #1a1a30;border-radius:9px;
+  padding:9px 12px;display:flex;align-items:center;gap:8px;
+  animation:slideIn 0.2s ease forwards;opacity:0;
+  -webkit-appearance:none;
+  -webkit-user-select:none;
+  user-select:none
 }
 @keyframes slideIn{from{opacity:0;transform:translateY(3px)}to{opacity:1;transform:none}}
 
@@ -104,15 +145,17 @@ input[type=text]::placeholder{color:#333355}
 
 .dname{
   flex:1;font-family:'JetBrains Mono',monospace;
-  font-size:13px;font-weight:600;color:#e0e0f0
+  font-size:12px;font-weight:600;color:#e0e0f0;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap
 }
 .dname .ext{color:#444466;font-weight:400}
 .domain-card.avail .dname{color:#00e676}
 .domain-card.avail .dname .ext{color:#00e67699}
 
 .badge{
-  font-size:9px;padding:3px 8px;border-radius:6px;
-  font-weight:600;letter-spacing:0.5px;flex-shrink:0
+  font-size:8px;padding:2px 6px;border-radius:5px;
+  font-weight:600;letter-spacing:0.4px;flex-shrink:0;
+  -webkit-user-select:none;user-select:none
 }
 .b-hot{background:#00e67618;color:#00e676;border:1px solid #00e67630}
 .b-good{background:#ffab4018;color:#ffab40;border:1px solid #ffab4030}
@@ -120,20 +163,27 @@ input[type=text]::placeholder{color:#333355}
 .b-avail{background:#00e67620;color:#00e676;border:1px solid #00e67635}
 .b-taken{background:#ffffff08;color:#222240;border:1px solid #1a1a30}
 
-.links{display:flex;gap:3px;flex-shrink:0;flex-wrap:wrap}
+.links{display:flex;gap:2px;flex-shrink:0;flex-wrap:wrap}
 .lbtn{
-  padding:5px 8px;border-radius:6px;font-size:9px;
+  padding:4px 6px;border-radius:5px;font-size:8px;
   font-weight:600;font-family:'Outfit',sans-serif;
   text-decoration:none;border:1px solid #1a1a30;
-  color:#2a2a45;transition:all 0.1s;white-space:nowrap
+  color:#2a2a45;transition:all 0.1s;white-space:nowrap;
+  -webkit-appearance:none;
+  -webkit-tap-highlight-color:transparent;
+  touch-action:manipulation
 }
-.lbtn:hover{border-color:#00e67640;color:#00e676}
+.lbtn:active{border-color:#00e67640;color:#00e676}
 .domain-card.avail .lbtn{border-color:#00e67630;color:#00e676}
 
 .cpbtn{
-  background:transparent;border:1px solid #1a1a30;border-radius:6px;
-  color:#2a2a45;padding:5px 8px;cursor:pointer;font-size:10px;
-  transition:all 0.1s;flex-shrink:0
+  background:transparent;border:1px solid #1a1a30;border-radius:5px;
+  color:#2a2a45;padding:4px 6px;cursor:pointer;font-size:9px;
+  transition:all 0.1s;flex-shrink:0;
+  -webkit-appearance:none;
+  -webkit-user-select:none;user-select:none;
+  -webkit-tap-highlight-color:transparent;
+  touch-action:manipulation
 }
 .domain-card.avail .cpbtn{border-color:#00e67630;color:#00e67699}
 .cpbtn.ok{color:#00e676;border-color:#00e67630}
@@ -142,8 +192,8 @@ input[type=text]::placeholder{color:#333355}
 
 /* Status & Progress */
 .progress-bar{
-  height:3px;background:#111120;border-radius:2px;
-  overflow:hidden;margin-bottom:8px;display:none
+  height:2px;background:#111120;border-radius:2px;
+  overflow:hidden;margin-bottom:6px;display:none
 }
 .progress-fill{
   height:100%;background:linear-gradient(90deg,#00e676,#00bcd4);
@@ -152,45 +202,79 @@ input[type=text]::placeholder{color:#333355}
 
 .status-row{
   display:flex;justify-content:space-between;align-items:center;
-  margin-bottom:12px;font-size:11px;color:#2a2a45;gap:8px
+  margin-bottom:8px;font-size:10px;color:#2a2a45;gap:6px
 }
-.status-text{flex:1}
+.status-text{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 
 .stats{
-  display:flex;gap:8px;margin-bottom:12px;display:none
+  display:flex;gap:6px;margin-bottom:10px;display:none
 }
 .stat{
   flex:1;background:#0f0f1e;border:1px solid #1a1a30;
-  border-radius:8px;padding:8px 10px;text-align:center
+  border-radius:7px;padding:6px 8px;text-align:center
 }
-.stat-num{font-size:16px;font-weight:700;font-family:'JetBrains Mono',monospace}
-.stat-label{font-size:9px;color:#2a2a45;letter-spacing:1px;margin-top:2px}
+.stat-num{font-size:14px;font-weight:700;font-family:'JetBrains Mono',monospace}
+.stat-label{font-size:8px;color:#2a2a45;letter-spacing:0.4px;margin-top:1px}
 
 /* Empty states */
 .empty{
-  text-align:center;padding:30px 20px;color:#1a1a28;font-size:12px;line-height:2
+  text-align:center;padding:20px 10px;color:#1a1a28;font-size:11px;line-height:1.6;
+  flex:1;display:flex;align-items:center;justify-content:center
 }
 
 .count-label{
-  font-size:10px;color:#2a2a45;margin-bottom:10px
+  font-size:9px;color:#2a2a45;margin-bottom:8px
 }
 
 .section-head{
-  font-size:9px;letter-spacing:2px;color:#1a1a28;
-  text-transform:uppercase;margin-top:12px;margin-bottom:6px
+  font-size:8px;letter-spacing:1.5px;color:#1a1a28;
+  text-transform:uppercase;margin-top:8px;margin-bottom:4px
 }
 
 @keyframes spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
 .spin{
-  display:inline-block;width:12px;height:12px;
-  border:2px solid #333355;border-top-color:#00e676;
+  display:inline-block;width:10px;height:10px;
+  border:1.5px solid #333355;border-top-color:#00e676;
   border-radius:50%;animation:spin 0.6s linear infinite;
-  vertical-align:middle;margin-right:5px
+  vertical-align:middle;margin-right:4px;flex-shrink:0
 }
 
 /* Footer */
 .footer{
-  text-align:center;color:#1a1a28;font-size:10px;margin-top:30px;padding-top:20px;border-top:1px solid #1a1a30
+  text-align:center;color:#1a1a28;font-size:9px;margin-top:8px;padding-top:8px;border-top:1px solid #1a1a30
+}
+
+/* Search highlight */
+.search-highlight{
+  background:#00e67615;
+  border-color:#00e67635 !important;
+  animation:highlight 0.3s ease
+}
+@keyframes highlight{from{background:#00e67625}to{background:#00e67615}}
+
+/* Mobile optimizations */
+@media (max-width: 600px) {
+  body{padding:8px}
+  .header{margin-bottom:8px}
+  h2{font-size:18px}
+  .tabs{margin-bottom:8px}
+  .tab{min-width:80px;padding:6px 8px;font-size:10px}
+  .controls{gap:6px;margin-bottom:8px}
+  .row{gap:4px}
+  input[type=text]{font-size:12px;padding:8px 10px}
+  .btn{padding:8px 12px;font-size:10px}
+  .domain-card{padding:8px 10px;gap:6px}
+  .dname{font-size:11px}
+  .badge{font-size:8px;padding:2px 5px}
+  .lbtn{font-size:8px;padding:3px 5px}
+  .cpbtn{font-size:9px;padding:3px 5px}
+}
+
+@media (max-width: 400px) {
+  h2{font-size:16px}
+  .tab{min-width:70px;font-size:9px}
+  input[type=text]{font-size:12px}
+  .dname{font-size:11px}
 }
 </style>
 </head>
@@ -199,81 +283,73 @@ input[type=text]::placeholder{color:#333355}
 <div class="container">
   <!-- Header -->
   <div class="header">
-    <h1>Domain Naming Suite</h1>
-    <h2>Find Your Perfect Domain</h2>
-    <p class="tagline">Generate • Coin • Check — All in One</p>
+    <h1>Domain Finder</h1>
+    <h2>Find Perfect Domains</h2>
+    <p class="tagline">Generate • Coin • Check</p>
   </div>
 
   <!-- Tabs -->
   <div class="tabs">
-    <button class="tab active" onclick="switchTab(0, this)">⚡ Quick Hunt</button>
-    <button class="tab" onclick="switchTab(1, this)">🔬 Pro Coins</button>
-    <button class="tab" onclick="switchTab(2, this)">🟢 Live Check</button>
+    <button class="tab active" onclick="switchTab(0, this)">⚡ Hunt</button>
+    <button class="tab" onclick="switchTab(1, this)">🔬 Pro</button>
+    <button class="tab" onclick="switchTab(2, this)">🟢 Check</button>
   </div>
 
-  <!-- TAB 1: QUICK HUNT (Domain Hunter) -->
+  <!-- TAB 1: QUICK HUNT -->
   <div class="tab-content active">
     <div class="tool-section">
-      <div class="section-title"><span class="icon">⚡</span> Quick Domain Hunt</div>
+      <div class="section-title"><span class="icon">⚡</span> Quick Hunt</div>
       
       <div class="controls">
-        <div class="row">
-          <input type="text" id="kw-quick" placeholder="Enter keyword (ex: edge, signal, trade, pick)" />
-          <button class="btn" onclick="generateQuick()">Generate Names</button>
-        </div>
+        <input type="text" id="kw-quick" placeholder="keyword (edge, signal, trade...)" oninput="autoSearchQuick()" />
         <div class="tld-row" id="tld-quick-row"></div>
       </div>
 
       <div class="count-label" id="count-quick" style="display:none"></div>
       <div class="results" id="results-quick">
-        <div class="empty">Enter a keyword above to generate domain ideas</div>
+        <div class="empty">Tape un mot-clé</div>
       </div>
     </div>
   </div>
 
-  <!-- TAB 2: PRO COINS (Domain Hunter Pro) -->
+  <!-- TAB 2: PRO COINS -->
   <div class="tab-content">
     <div class="tool-section">
-      <div class="section-title"><span class="icon">🔬</span> Pro Coined Names</div>
+      <div class="section-title"><span class="icon">🔬</span> Pro Coins</div>
       
       <div class="controls">
         <div class="row">
-          <input type="text" id="kw-pro-1" placeholder="Word 1 (ex: edge, trade)" />
-          <input type="text" id="kw-pro-2" placeholder="Word 2 optional (ex: hunt, flow)" />
-          <button class="btn" onclick="generatePro()">Generate Coins</button>
+          <input type="text" id="kw-pro-1" placeholder="Word 1" oninput="autoSearchPro()" />
+          <input type="text" id="kw-pro-2" placeholder="Word 2 (opt)" oninput="autoSearchPro()" />
         </div>
         <div class="tld-row" id="tld-pro-row"></div>
-      </div>
 
-      <div style="display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap">
-        <button class="btn secondary" style="flex:1;min-width:80px" onclick="switchProTab('all', this)">All</button>
-        <button class="btn secondary" style="flex:1;min-width:80px" onclick="switchProTab('coined', this)">Coined</button>
-        <button class="btn secondary" style="flex:1;min-width:80px" onclick="switchProTab('short', this)">Short ≤6</button>
-        <button class="btn secondary" style="flex:1;min-width:80px" onclick="switchProTab('hot', this)">🔥 Hot</button>
+        <div style="display:flex;gap:4px;margin-top:6px;flex-wrap:wrap">
+          <button class="btn secondary" style="flex:1;min-width:50px" onclick="switchProTab('all', this)">All</button>
+          <button class="btn secondary" style="flex:1;min-width:50px" onclick="switchProTab('hot', this)">🔥</button>
+          <button class="btn secondary" style="flex:1;min-width:50px" onclick="switchProTab('short', this)">≤6</button>
+        </div>
       </div>
 
       <div class="count-label" id="count-pro" style="display:none"></div>
       <div class="results" id="results-pro">
-        <div class="empty">Invent words like Spotify, Robinhood, Revolut</div>
+        <div class="empty">Invente des noms (Spotify-style)</div>
       </div>
     </div>
   </div>
 
-  <!-- TAB 3: LIVE CHECK (Domain Checker) -->
+  <!-- TAB 3: LIVE CHECK -->
   <div class="tab-content">
     <div class="tool-section">
-      <div class="section-title"><span class="icon">🟢</span> Live DNS Checker</div>
+      <div class="section-title"><span class="icon">🟢</span> Live Check</div>
       
       <div class="controls">
-        <div class="row">
-          <input type="text" id="domains-list" placeholder="Domain names (comma or newline separated): edgr, travio, sgnlr" />
-          <button class="btn" id="check-btn" onclick="startDNSCheck()">Check DNS</button>
-        </div>
+        <input type="text" id="domains-list" placeholder="domains: edgr, travio, sgnlr" />
+        <button class="btn" id="check-btn" onclick="startDNSCheck()" style="width:100%">Check DNS</button>
         <div class="tld-row" id="tld-check-row"></div>
 
-        <div class="row" style="margin-top:8px">
-          <input type="text" id="gen-keyword" placeholder="Auto-generate from keyword" />
-          <button class="btn secondary" onclick="autoGenerateForCheck()">Generate Names</button>
+        <div class="row" style="margin-top:6px">
+          <input type="text" id="gen-keyword" placeholder="auto-gen keyword" oninput="autoGenerateForCheck()" />
         </div>
       </div>
 
@@ -283,39 +359,38 @@ input[type=text]::placeholder{color:#333355}
       </div>
       
       <div class="stats" id="stats-bar">
-        <div class="stat"><div class="stat-num" id="stat-avail" style="color:#00e676">0</div><div class="stat-label">AVAILABLE</div></div>
-        <div class="stat"><div class="stat-num" id="stat-taken" style="color:#333355">0</div><div class="stat-label">TAKEN</div></div>
-        <div class="stat"><div class="stat-num" id="stat-total" style="color:#555577">0</div><div class="stat-label">CHECKED</div></div>
+        <div class="stat"><div class="stat-num" id="stat-avail">0</div><div class="stat-label">✓</div></div>
+        <div class="stat"><div class="stat-num" id="stat-taken">0</div><div class="stat-label">✗</div></div>
+        <div class="stat"><div class="stat-num" id="stat-total">0</div><div class="stat-label">✓</div></div>
       </div>
 
-      <div id="avail-section" style="display:none"><div class="section-head">🟢 Available</div></div>
-      <div class="results" id="results-avail" style="margin-bottom:6px"></div>
+      <div id="avail-section" style="display:none"><div class="section-head">🟢 AVAILABLE</div></div>
+      <div class="results" id="results-avail" style="margin-bottom:4px"></div>
 
-      <div id="taken-section" style="display:none"><div class="section-head">✗ Taken</div></div>
+      <div id="taken-section" style="display:none"><div class="section-head">✗ TAKEN</div></div>
       <div class="results" id="results-taken"></div>
     </div>
   </div>
 
   <!-- Footer -->
   <div class="footer">
-    <p>All domains checked via live Cloudflare DNS • No WHOIS • Privacy first 🔒</p>
+    <p>Cloudflare DNS • No WHOIS • Privacy 🔒</p>
   </div>
 </div>
 
 <script>
 // ═══════════════════════════════════════════════════════════════════════════
-// CONFIGURATION
+// CONFIG
 // ═══════════════════════════════════════════════════════════════════════════
-const TLDS = ['.com','.io','.app','.co','.ai','.xyz','.gg','.pro','.net','.dev'];
-const QUICK_DEFAULT_TLDS = new Set(['.com','.io','.app','.co']);
-const PRO_DEFAULT_TLDS = new Set(['.com','.io','.app','.co']);
-const CHECK_DEFAULT_TLDS = new Set(['.com','.io','.app']);
+const TLDS = ['.com','.io','.app','.co','.ai','.xyz'];
+const QUICK_TLDS = new Set(['.com','.io','.app','.co']);
+const PRO_TLDS = new Set(['.com','.io','.app','.co']);
+const CHECK_TLDS = new Set(['.com','.io','.app']);
 
-let activeTldsQuick = new Set(QUICK_DEFAULT_TLDS);
-let activeTldsPro = new Set(PRO_DEFAULT_TLDS);
-let activeTldsCheck = new Set(CHECK_DEFAULT_TLDS);
+let activeTldsQuick = new Set(QUICK_TLDS);
+let activeTldsPro = new Set(PRO_TLDS);
+let activeTldsCheck = new Set(CHECK_TLDS);
 
-// Initialize TLD buttons
 function initTLDs() {
   initTLDRow('tld-quick-row', activeTldsQuick);
   initTLDRow('tld-pro-row', activeTldsPro);
@@ -328,10 +403,13 @@ function initTLDRow(elementId, activeSet) {
     const b = document.createElement('button');
     b.className = 'tld-btn' + (activeSet.has(t) ? ' on' : '');
     b.textContent = t;
-    b.onclick = () => {
+    b.onclick = (e) => {
+      e.preventDefault();
       if(activeSet.has(t)) activeSet.delete(t);
       else activeSet.add(t);
       b.className = 'tld-btn' + (activeSet.has(t) ? ' on' : '');
+      if(elementId==='tld-quick-row') autoSearchQuick();
+      if(elementId==='tld-pro-row') autoSearchPro();
     };
     row.appendChild(b);
   });
@@ -348,82 +426,77 @@ function switchTab(idx, el) {
 }
 
 function switchProTab(type, el) {
-  document.querySelectorAll('.btn.secondary').forEach(b => b.style.background = '#111120');
+  document.querySelectorAll('#results-pro ~ .btn.secondary, .controls .btn.secondary').forEach(b => {
+    b.style.background = '#111120';
+    b.style.color = '#444466';
+  });
   el.style.background = '#00e67618';
+  el.style.color = '#00e676';
   renderProTab(type);
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
-// QUICK HUNT (Domain Hunter)
+// QUICK HUNT - REAL-TIME SEARCH
 // ═══════════════════════════════════════════════════════════════════════════
-const PREFIXES = ['get','try','use','go','my','the','pro','one','top','real','true','live','now','fast','smart','easy','quick'];
-const SUFFIXES = ['hq','app','ai','hub','pro','io','ly','fy','ify','base','lab','desk','kit','link','spot'];
-const FINANCE = ['trade','signal','edge','pick','alpha','beta','fund','flow','vault','yield','bull','bear','chart'];
-const TECH = ['data','stack','node','sync','flux','wave','beam','core','grid','loop'];
+const PREFIXES = ['get','try','use','my','the','pro','one','top','real'];
+const SUFFIXES = ['hq','app','ai','hub','pro','io','ly','fy','base','lab','kit','link'];
 
 function generateQuickNames(kw) {
   const k = kw.toLowerCase().replace(/[^a-z0-9]/g,'');
+  if(k.length < 2) return [];
+  
   const names = new Set();
-  
   names.add(k);
-  PREFIXES.slice(0,8).forEach(p => names.add(p+k));
-  SUFFIXES.slice(0,8).forEach(s => names.add(k+s));
-  FINANCE.slice(0,5).forEach(w => {names.add(k+w);names.add(w+k)});
-  
-  if(k.length > 4) {
-    names.add(k.slice(0,4)+'r');
-    names.add(k.slice(0,5));
-  }
+  PREFIXES.forEach(p => names.add(p+k));
+  SUFFIXES.forEach(s => names.add(k+s));
   
   return [...names].filter(n => n.length >= 3 && n.length <= 12);
 }
 
 function scoreQuick(name) {
   const len = name.length;
-  if(len <= 5) return {label:'🔥 HOT', cls:'b-hot'};
-  if(len <= 7) return {label:'✓ GOOD', cls:'b-good'};
+  if(len <= 5) return {label:'🔥', cls:'b-hot'};
+  if(len <= 7) return {label:'✓', cls:'b-good'};
   return {label:'OK', cls:'b-ok'};
 }
 
-let quickDomains = [];
-
-function generateQuick() {
+function autoSearchQuick() {
   const kw = document.getElementById('kw-quick').value.trim();
-  if(!kw) return;
+  if(kw.length < 2) {
+    document.getElementById('results-quick').innerHTML = '<div class="empty">Tape un mot-clé</div>';
+    document.getElementById('count-quick').style.display = 'none';
+    return;
+  }
   
   const names = generateQuickNames(kw);
   const tlds = [...activeTldsQuick];
   
-  quickDomains = [];
-  names.forEach(n => {
-    tlds.forEach(t => {
-      quickDomains.push({name: n, tld: t, domain: n+t});
-    });
-  });
+  let domains = [];
+  names.forEach(n => tlds.forEach(t => domains.push({name:n, tld:t, domain:n+t})));
   
-  quickDomains.sort((a,b) => {
+  domains.sort((a,b) => {
     const tldScore = t => t==='.com'?0:t==='.io'?1:t==='.app'?2:3;
     return (a.name.length + tldScore(a.tld)) - (b.name.length + tldScore(b.tld));
   });
   
-  const top = quickDomains.slice(0, 60);
+  const top = domains.slice(0, 40);
   const container = document.getElementById('results-quick');
   container.innerHTML = '';
   
   document.getElementById('count-quick').style.display = 'block';
-  document.getElementById('count-quick').textContent = `${top.length} domains generated`;
+  document.getElementById('count-quick').textContent = `${top.length} names`;
   
   top.forEach((d, i) => {
     const score = scoreQuick(d.name);
     const card = document.createElement('div');
     card.className = 'domain-card';
-    card.style.animationDelay = `${i * 0.015}s`;
+    card.style.animationDelay = `${i * 0.01}s`;
     card.innerHTML = `
       <div class="dname">${d.name}<span class="ext">${d.tld}</span></div>
       <div class="badge ${score.cls}">${score.label}</div>
       <div class="links">
         <a href="https://www.namecheap.com/domains/registration/results/?domain=${d.domain}" target="_blank" class="lbtn">NC</a>
-        <a href="https://porkbun.com/checkout/search?q=${d.domain}" target="_blank" class="lbtn">Porkbun</a>
+        <a href="https://porkbun.com/checkout/search?q=${d.domain}" target="_blank" class="lbtn">PB</a>
       </div>
       <button class="cpbtn" onclick="copyDomain(this,'${d.domain}')">⎘</button>
     `;
@@ -432,14 +505,15 @@ function generateQuick() {
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
-// PRO COINS (Domain Hunter Pro)
+// PRO COINS - REAL-TIME SEARCH
 // ═══════════════════════════════════════════════════════════════════════════
-const ENDINGS = ['ly','fy','io','ai','r','er','ify','ix','ex','ux','ax','on','in','iq','vy','zy','key','way','lab','hub','co','go','dot','bot','fox','box'];
-const BEGINS = ['ve','ze','ka','xi','vy','ro','mo','lo','ko','jo','ho','go','fo','do','co','bo','zo','vi','zi','li','ki','fi'];
+const ENDINGS = ['ly','fy','io','ai','r','er','ify','ix','ex','ux','on','in','iq','vy','zy'];
+const BEGINS = ['ve','ze','ka','ro','mo','lo','ko','vi','zi','li','ki','fi'];
 
 function coinedFromOne(w) {
   const names = new Set();
   const clean = w.toLowerCase().replace(/[^a-z]/g,'');
+  if(clean.length < 2) return [...names];
   
   for(let i=2;i<=Math.min(clean.length,6);i++){
     ENDINGS.forEach(e => {
@@ -450,24 +524,19 @@ function coinedFromOne(w) {
   
   const vd = clean.replace(/[aeiou]/g,'').slice(0,8);
   if(vd.length>=2){
-    ENDINGS.slice(0,10).forEach(e => {
+    ENDINGS.slice(0,8).forEach(e => {
       const n = vd+e;
       if(n.length>=4&&n.length<=9) names.add(n);
     });
   }
   
-  BEGINS.slice(0,8).forEach(b => {
+  BEGINS.slice(0,6).forEach(b => {
     const n = b+clean;
     if(n.length>=4&&n.length<=10) names.add(n);
-    for(let i=3;i<=6;i++){
+    for(let i=3;i<=5;i++){
       const nt = b+clean.slice(0,i);
       if(nt.length>=4&&nt.length<=9) names.add(nt);
     }
-  });
-  
-  ['r','x','z','q','v','k'].forEach(l => {
-    const n = clean+l;
-    if(n.length<=8) names.add(n);
   });
   
   return [...names].filter(n=>n.length>=4&&n.length<=10&&n!==clean);
@@ -489,23 +558,28 @@ function scorePro(name) {
   const vowels = (name.match(/[aeiou]/g)||[]).length;
   const pronounceable = /^[bcdfghjklmnpqrstvwxyz]?[aeiou]/.test(name) || vowels/name.length > 0.25;
   if(l<=5&&pronounceable) return {label:'🔥 HOT',cls:'b-hot',type:'hot'};
-  if(l<=7&&pronounceable) return {label:'✓ GOOD',cls:'b-good',type:'good'};
+  if(l<=7&&pronounceable) return {label:'✓',cls:'b-good',type:'good'};
   return {label:'OK',cls:'b-ok',type:'ok'};
 }
 
 let proDomains = [];
 let proCurrentTab = 'all';
 
-function generatePro() {
+function autoSearchPro() {
   const w1 = document.getElementById('kw-pro-1').value.trim().toLowerCase().replace(/[^a-z]/g,'');
   const w2 = document.getElementById('kw-pro-2').value.trim().toLowerCase().replace(/[^a-z]/g,'');
-  if(!w1) return;
+  
+  if(w1.length < 2) {
+    document.getElementById('results-pro').innerHTML = '<div class="empty">Tape 2 mots</div>';
+    document.getElementById('count-pro').style.display = 'none';
+    return;
+  }
   
   const names = new Set();
   const coined1 = coinedFromOne(w1);
   coined1.forEach(n => names.add({n, method:'coined'}));
   
-  if(w2) {
+  if(w2.length >= 2) {
     const coined2 = coinedFromOne(w2);
     coined2.forEach(n => names.add({n, method:'coined'}));
     const port = portmanteau(w1, w2);
@@ -529,7 +603,7 @@ function generatePro() {
   
   proDomains.sort((a,b) => {
     const order = {hot:0,good:1,ok:2};
-    const tldOrder = t => t==='.com'?0:t==='.io'?1:t==='.app'?2:t==='.co'?3:4;
+    const tldOrder = t => t==='.com'?0:t==='.io'?1:t==='.app'?2:3;
     if(order[a.score.type]!==order[b.score.type]) return order[a.score.type]-order[b.score.type];
     if(a.name.length!==b.name.length) return a.name.length-b.name.length;
     return tldOrder(a.tld)-tldOrder(b.tld);
@@ -541,34 +615,32 @@ function generatePro() {
 
 function renderProTab(tab) {
   let list = proDomains;
-  if(tab==='coined') list = proDomains.filter(d=>d.method==='portmanteau'||d.method==='coined');
-  if(tab==='short') list = proDomains.filter(d=>d.name.length<=6);
   if(tab==='hot') list = proDomains.filter(d=>d.score.type==='hot');
+  if(tab==='short') list = proDomains.filter(d=>d.name.length<=6);
   
-  const top = list.slice(0,80);
+  const top = list.slice(0,50);
   const container = document.getElementById('results-pro');
   container.innerHTML = '';
   
   if(!top.length){
-    container.innerHTML = '<div class="empty">No results for this filter</div>';
+    container.innerHTML = '<div class="empty">No results</div>';
     document.getElementById('count-pro').style.display='none';
     return;
   }
   
   document.getElementById('count-pro').style.display='block';
-  document.getElementById('count-pro').textContent = `${top.length} coined names`;
+  document.getElementById('count-pro').textContent = `${top.length} coins`;
   
   top.forEach((d,i) => {
     const card = document.createElement('div');
     card.className = 'domain-card'+(d.score.type==='hot'?' hot':'');
-    card.style.animationDelay = `${i*0.012}s`;
+    card.style.animationDelay = `${i*0.008}s`;
     card.innerHTML = `
       <div class="dname">${d.name}<span class="ext">${d.tld}</span></div>
       <div class="badge ${d.score.cls}">${d.score.label}</div>
-      <div class="method-tag">${d.method==='portmanteau'?'⊕':'~'}</div>
       <div class="links">
         <a href="https://www.namecheap.com/domains/registration/results/?domain=${d.domain}" target="_blank" class="lbtn">NC</a>
-        <a href="https://porkbun.com/checkout/search?q=${d.domain}" target="_blank" class="lbtn">Porkbun</a>
+        <a href="https://porkbun.com/checkout/search?q=${d.domain}" target="_blank" class="lbtn">PB</a>
       </div>
       <button class="cpbtn" onclick="copyDomain(this,'${d.domain}')">⎘</button>
     `;
@@ -599,10 +671,11 @@ async function checkDNS(domain) {
 
 function generateCheckNames(kw) {
   const k = kw.toLowerCase().replace(/[^a-z]/g,'');
-  const names = new Set();
+  if(k.length < 2) return [];
   
-  const endings = ['r','x','z','vy','fy','ly','iq','io','ax','ex','ix','on','in','ux','zy'];
-  const prefixes = ['ve','ze','ka','ro','mo','lo','ko','vi','zi','li','ki','fi'];
+  const names = new Set();
+  const endings = ['r','x','z','vy','fy','ly','iq','io'];
+  const prefixes = ['ve','ze','ka','ro','mo','lo'];
   
   for(let i=2;i<=Math.min(k.length,5);i++){
     endings.forEach(e => {
@@ -618,14 +691,6 @@ function generateCheckNames(kw) {
     }
   });
   
-  const vd = k.replace(/[aeiou]/g,'');
-  if(vd.length>=3) {
-    endings.forEach(e => {
-      const n = vd+e;
-      if(n.length>=4&&n.length<=8) names.add(n);
-    });
-  }
-  
   return [...names].filter(n=>n!==k&&n.length>=3&&n.length<=10);
 }
 
@@ -633,7 +698,7 @@ function autoGenerateForCheck() {
   const kw = document.getElementById('gen-keyword').value.trim();
   if(!kw) return;
   const names = generateCheckNames(kw);
-  document.getElementById('domains-list').value = names.slice(0,30).join(', ');
+  document.getElementById('domains-list').value = names.slice(0,20).join(', ');
 }
 
 let dnsRunning = false;
@@ -670,7 +735,6 @@ async function startDNSCheck() {
   updateStats();
   
   const btn = document.getElementById('check-btn');
-  btn.className = 'btn stop';
   btn.textContent = '⛔ Stop';
   
   let checked = 0;
@@ -678,7 +742,7 @@ async function startDNSCheck() {
   for(const d of domains) {
     if(dnsStopFlag) break;
     
-    document.getElementById('status-text').textContent = `Checking ${d.domain}...`;
+    document.getElementById('status-text').textContent = `${d.domain}...`;
     document.getElementById('progress-fill').style.width = `${(checked/domains.length)*100}%`;
     
     const result = await checkDNS(d.domain);
@@ -687,41 +751,37 @@ async function startDNSCheck() {
     if(result === 'available') {
       availCount++;
       document.getElementById('avail-section').style.display='block';
-      addDNSCard(d, 'avail', document.getElementById('results-avail'), checked);
+      addDNSCard(d, 'avail', document.getElementById('results-avail'));
     } else {
       takenCount++;
-      if(takenCount <= 20) {
+      if(takenCount <= 15) {
         document.getElementById('taken-section').style.display='block';
-        addDNSCard(d, 'taken', document.getElementById('results-taken'), checked);
+        addDNSCard(d, 'taken', document.getElementById('results-taken'));
       }
     }
     
     updateStats();
-    await new Promise(r => setTimeout(r, 120));
+    await new Promise(r => setTimeout(r, 100));
   }
   
   dnsRunning = false;
   document.getElementById('progress-fill').style.width = '100%';
-  document.getElementById('status-text').textContent = dnsStopFlag
-    ? `Stopped · ${availCount} available found`
-    : `Done · ${availCount} available out of ${totalCount} checked`;
-  btn.className = 'btn';
+  document.getElementById('status-text').textContent = `Done · ${availCount} avail`;
   btn.textContent = 'Check DNS';
 }
 
-function addDNSCard(d, result, container, idx) {
+function addDNSCard(d, result, container) {
   const isAvail = result === 'avail';
   const card = document.createElement('div');
   card.className = `domain-card ${isAvail ? 'avail' : 'taken'}`;
-  card.style.animationDelay = `${Math.min(idx,20)*0.02}s`;
   
   const badge = isAvail
-    ? `<div class="badge b-avail">🟢 AVAILABLE</div>`
-    : `<div class="badge b-taken">✗ taken</div>`;
+    ? `<div class="badge b-avail">🟢</div>`
+    : `<div class="badge b-taken">✗</div>`;
   
   const links = isAvail ? `
     <div class="links">
-      <a href="https://porkbun.com/checkout/search?q=${d.domain}" target="_blank" class="lbtn">Porkbun</a>
+      <a href="https://porkbun.com/checkout/search?q=${d.domain}" target="_blank" class="lbtn">PB</a>
       <a href="https://www.namecheap.com/domains/registration/results/?domain=${d.domain}" target="_blank" class="lbtn">NC</a>
     </div>
     <button class="cpbtn" onclick="copyDomain(this,'${d.domain}')">⎘</button>
@@ -736,7 +796,7 @@ function addDNSCard(d, result, container, idx) {
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
-// UTILITIES
+// UTILS
 // ═══════════════════════════════════════════════════════════════════════════
 function copyDomain(btn, domain) {
   navigator.clipboard.writeText(domain);
@@ -753,21 +813,10 @@ function copyDomain(btn, domain) {
 // ═══════════════════════════════════════════════════════════════════════════
 window.onload = () => {
   initTLDs();
-  
-  // Pre-load examples
   document.getElementById('kw-quick').value = 'edge';
   document.getElementById('kw-pro-1').value = 'edge';
   document.getElementById('kw-pro-2').value = 'trade';
 };
-
-// Keyboard shortcuts
-document.addEventListener('keydown', e => {
-  if(e.key==='Enter'&&(e.ctrlKey||e.metaKey)) {
-    const activeTab = document.querySelector('.tab-content.active');
-    if(activeTab.querySelector('#kw-quick')) generateQuick();
-    if(activeTab.querySelector('#kw-pro-1')) generatePro();
-  }
-});
 </script>
 
 </body>
