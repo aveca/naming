@@ -244,14 +244,6 @@ input[type=text]::placeholder{color:#333355}
   text-align:center;color:#1a1a28;font-size:9px;margin-top:8px;padding-top:8px;border-top:1px solid #1a1a30
 }
 
-/* Search highlight */
-.search-highlight{
-  background:#00e67615;
-  border-color:#00e67635 !important;
-  animation:highlight 0.3s ease
-}
-@keyframes highlight{from{background:#00e67625}to{background:#00e67615}}
-
 /* Mobile optimizations */
 @media (max-width: 600px) {
   body{padding:8px}
@@ -426,7 +418,7 @@ function switchTab(idx, el) {
 }
 
 function switchProTab(type, el) {
-  document.querySelectorAll('#results-pro ~ .btn.secondary, .controls .btn.secondary').forEach(b => {
+  document.querySelectorAll('.controls .btn.secondary').forEach(b => {
     b.style.background = '#111120';
     b.style.color = '#444466';
   });
