@@ -6,7 +6,7 @@
 <meta name="theme-color" content="#080810">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<title>Domain Naming Suite Pro - Ultimate</title>
+<title>Domain Finder Pro - Ultimate</title>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
@@ -43,7 +43,6 @@ h2{font-size:24px;font-weight:800;background:linear-gradient(135deg,#ff6b6b,#ff9
 /* Search Bar */
 .search-container{
   display:flex;
-  gap:8px;
   margin-bottom:16px;
   background:#0d0d18;
   padding:12px;
@@ -54,51 +53,12 @@ h2{font-size:24px;font-weight:800;background:linear-gradient(135deg,#ff6b6b,#ff9
 .search-input{
   flex:1;
   background:#111120;border:1px solid #1e1e35;border-radius:8px;
-  color:#fff;font-family:'Outfit',sans-serif;font-size:14px;
-  padding:12px 14px;outline:none;
+  color:#fff;font-family:'Outfit',sans-serif;font-size:16px;
+  padding:14px 16px;outline:none;
   -webkit-appearance:none;
 }
 .search-input:focus{border-color:#ff980044}
-
-.btn-search{
-  background:linear-gradient(135deg,#ff6b6b,#ff9800);
-  border:none;border-radius:8px;
-  color:#000;font-weight:700;font-size:12px;
-  font-family:'Outfit',sans-serif;
-  padding:12px 24px;cursor:pointer;
-  -webkit-appearance:none;
-  -webkit-tap-highlight-color:transparent;
-}
-.btn-search:active{opacity:0.7}
-.btn-search:disabled{opacity:0.4;cursor:default}
-
-/* Filter Row */
-.filters{
-  display:flex;
-  gap:6px;
-  margin-bottom:12px;
-  flex-wrap:wrap;
-  align-items:center;
-}
-
-.filter-btn{
-  padding:6px 12px;
-  border-radius:16px;
-  font-size:10px;
-  font-weight:600;
-  border:1px solid #1e1e35;
-  background:transparent;
-  color:#2a2a45;
-  cursor:pointer;
-  transition:all 0.1s;
-  -webkit-appearance:none;
-  -webkit-tap-highlight-color:transparent;
-}
-.filter-btn.active{
-  background:#ff980015;
-  border-color:#ff980035;
-  color:#ff9800
-}
+.search-input::placeholder{color:#333355}
 
 /* Results Grid */
 .results-grid{
@@ -251,16 +211,6 @@ h2{font-size:24px;font-weight:800;background:linear-gradient(135deg,#ff6b6b,#ff9
   font-size:12px;
 }
 
-/* Footer */
-.footer{
-  text-align:center;
-  color:#1a1a28;
-  font-size:9px;
-  margin-top:12px;
-  padding-top:8px;
-  border-top:1px solid #1a1a30;
-}
-
 /* Loading */
 @keyframes spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
 .spin{
@@ -273,16 +223,32 @@ h2{font-size:24px;font-weight:800;background:linear-gradient(135deg,#ff6b6b,#ff9
   animation:spin 0.6s linear infinite;
 }
 
+/* Status */
+.status-bar{
+  font-size:10px;
+  color:#2a2a45;
+  padding:8px 0;
+  text-align:center;
+  height:20px;
+}
+
+/* Footer */
+.footer{
+  text-align:center;
+  color:#1a1a28;
+  font-size:9px;
+  margin-top:12px;
+  padding-top:8px;
+  border-top:1px solid #1a1a30;
+}
+
 /* Mobile */
 @media (max-width: 768px) {
   .results-grid{
     grid-template-columns:repeat(auto-fill,minmax(240px,1fr));
   }
   h2{font-size:20px}
-  .search-container{
-    flex-direction:column;
-  }
-  .search-input{font-size:13px}
+  .search-input{font-size:14px}
 }
 
 @media (max-width: 480px) {
@@ -299,47 +265,40 @@ h2{font-size:24px;font-weight:800;background:linear-gradient(135deg,#ff6b6b,#ff9
 <div class="container">
   <!-- Header -->
   <div class="header">
-    <h1>🚀 Domain Finder Pro Ultimate</h1>
-    <h2>One Search, All Results</h2>
-    <p class="tagline">Generate • Coin • Check • Expire • Analyze → Everything in one search</p>
+    <h1>🚀 Domain Finder Pro</h1>
+    <h2>Find Your Perfect Domain</h2>
+    <p class="tagline">Type & watch instant results</p>
   </div>
 
   <!-- Search Bar -->
   <div class="search-container">
-    <input type="text" id="main-search" class="search-input" placeholder="Enter keyword (e.g., spark, edge, trade...)" onkeypress="handleEnter(event)" />
-    <button class="btn-search" onclick="runFullSearch()">Search All</button>
+    <input type="text" id="main-search" class="search-input" placeholder="Tape un mot-clé (spark, edge, trade...)" oninput="handleSearch()" />
   </div>
 
-  <!-- Filters -->
-  <div class="filters">
-    <span style="font-size:10px;color:#2a2a45;font-weight:600">FILTERS:</span>
-    <button class="filter-btn active" onclick="toggleFilter('available', this)">✓ Available</button>
-    <button class="filter-btn active" onclick="toggleFilter('expired', this)">💀 Expired</button>
-    <button class="filter-btn active" onclick="toggleFilter('seo', this)">📊 High SEO</button>
-    <button class="filter-btn" onclick="toggleFilter('all', this)">Show All</button>
-  </div>
+  <!-- Status -->
+  <div class="status-bar" id="status"></div>
 
   <!-- Results Grid -->
   <div class="results-grid" id="results">
-    <div class="empty-state">👆 Enter a keyword and click "Search All" to get instant results</div>
+    <div class="empty-state">👆 Commence à taper un mot-clé...</div>
   </div>
 
   <!-- Footer -->
   <div class="footer">
-    <p>Cloudflare DNS • Archive.org • 100% Privacy 🔒 | v3.0 Ultimate Edition</p>
+    <p>Cloudflare DNS • Archive.org • 100% Privacy 🔒 | v4.0 Live Search</p>
   </div>
 </div>
 
 <script>
 // ════════════════════════════════════════════════════════════════
-// DOMAIN NAMING SUITE PRO - ULTIMATE v3.0
-// One Search, All Proposals
+// DOMAIN NAMING SUITE - v4.0 LIVE SEARCH
+// One input field, real-time results as you type
 // ════════════════════════════════════════════════════════════════
 
 const TLDS = ['.com','.io','.app','.co','.ai','.dev','.tech','.xyz'];
 
-const PREFIXES = ['get','try','use','my','the','pro','one','top','real','your','our'];
-const SUFFIXES = ['hq','app','ai','hub','pro','io','ly','fy','base','lab','kit','link','ly','er','ify'];
+const PREFIXES = ['get','try','use','my','the','pro','one','top','real','your','our','my'];
+const SUFFIXES = ['hq','app','ai','hub','pro','io','ly','fy','base','lab','kit','link','er','ify'];
 const ENDINGS = ['ly','fy','io','ai','r','er','ify','ix','ex','ux','on','in','iq','vy','zy'];
 const BEGINS = ['ve','ze','ka','ro','mo','lo','ko','vi','zi','li','ki','fi'];
 
@@ -351,6 +310,8 @@ const SEO_KEYWORDS = {
   'lab': {volume: 1100, difficulty: 55},
   'pro': {volume: 2100, difficulty: 80},
   'dev': {volume: 1600, difficulty: 75},
+  'edge': {volume: 1900, difficulty: 81},
+  'trade': {volume: 1400, difficulty: 72},
 };
 
 const TLD_AUTHORITY = {
@@ -364,72 +325,107 @@ const TLD_AUTHORITY = {
   '.xyz': 3,
 };
 
-let activeFilters = {available: true, expired: true, seo: true};
+let searchTimeout;
 let allResults = {};
+let checkingDNS = new Set();
 
 // ════════════════════════════════════════════════════════════════
-// SEARCH FUNCTIONS
+// LIVE SEARCH (triggered on input)
 // ════════════════════════════════════════════════════════════════
 
-function handleEnter(e) {
-  if(e.key === 'Enter') runFullSearch();
+function handleSearch() {
+  const keyword = document.getElementById('main-search').value.trim();
+  
+  clearTimeout(searchTimeout);
+  
+  if(keyword.length < 2) {
+    document.getElementById('results').innerHTML = '<div class="empty-state">👆 Commence à taper...</div>';
+    document.getElementById('status').textContent = '';
+    return;
+  }
+  
+  document.getElementById('status').innerHTML = '<span class="spin"></span> Recherche en cours...';
+  
+  // Delay search to avoid hammering
+  searchTimeout = setTimeout(() => {
+    runLiveSearch(keyword);
+  }, 300);
 }
 
-async function runFullSearch() {
-  const keyword = document.getElementById('main-search').value.trim();
-  if(keyword.length < 2) { alert('Enter at least 2 characters'); return; }
-  
-  const resultsDiv = document.getElementById('results');
-  resultsDiv.innerHTML = '<div class="empty-state"><span class="spin"></span> Generating all proposals...</div>';
+async function runLiveSearch(keyword) {
+  const k = keyword.toLowerCase().replace(/[^a-z0-9]/g,'');
   
   allResults = {
-    quick: generateQuickProposals(keyword),
-    coined: generateCoinedProposals(keyword),
-    available: [],
-    expired: [],
-    seo: []
+    quick: generateQuickProposals(k),
+    coined: generateCoinedProposals(k),
+    expired: generateExpiredProposals(k),
+    seo: calculateSEOProposals(k)
   };
   
-  // Check DNS availability (with delay to not hammer servers)
-  await checkAvailability(allResults.quick);
-  await checkAvailability(allResults.coined);
-  
-  // Generate expired domain suggestions
-  allResults.expired = generateExpiredProposals(keyword);
-  
-  // Calculate SEO scores
-  allResults.seo = calculateSEOProposals(keyword);
+  // Start checking DNS in background (don't wait)
+  checkDNSinBackground(allResults.quick);
+  checkDNSinBackground(allResults.coined);
   
   renderAllResults();
+  document.getElementById('status').innerHTML = `✓ ${allResults.quick.length + allResults.coined.length + allResults.expired.length} propositions générées`;
 }
 
+// ════════════════════════════════════════════════════════════════
+// DNS CHECKING (in background, doesn't block rendering)
+// ════════════════════════════════════════════════════════════════
+
+async function checkDNSinBackground(domains) {
+  for(const d of domains.slice(0, 15)) {
+    if(checkingDNS.has(d.domain)) continue;
+    
+    checkingDNS.add(d.domain);
+    
+    try {
+      const res = await fetch(`https://cloudflare-dns.com/dns-query?name=${d.domain}&type=A`, {
+        headers: {Accept: 'application/dns-json'}
+      });
+      const data = await res.json();
+      d.available = (data.Status === 3 || (data.Status === 0 && (!data.Answer || data.Answer.length === 0)));
+      
+      // Re-render if this domain is visible
+      renderAllResults();
+      
+      await new Promise(r => setTimeout(r, 100));
+    } catch(e) {
+      d.available = null;
+    }
+  }
+}
+
+// ════════════════════════════════════════════════════════════════
+// PROPOSAL GENERATORS
+// ════════════════════════════════════════════════════════════════
+
 function generateQuickProposals(kw) {
-  const k = kw.toLowerCase().replace(/[^a-z0-9]/g,'');
   const domains = [];
   
   // Direct keyword
   TLDS.forEach(t => {
-    const name = k;
-    domains.push({name, tld: t, domain: name+t, type: 'direct', score: scoreQuick(name)});
+    const name = kw;
+    domains.push({name, tld: t, domain: name+t, type: 'direct', score: scoreQuick(name), available: null});
   });
   
   // With prefixes
-  PREFIXES.slice(0,6).forEach(p => {
+  PREFIXES.slice(0,8).forEach(p => {
     TLDS.slice(0,4).forEach(t => {
-      const name = p+k;
-      if(name.length <= 12) domains.push({name, tld: t, domain: name+t, type: 'prefix', score: scoreQuick(name)});
+      const name = p+kw;
+      if(name.length <= 12) domains.push({name, tld: t, domain: name+t, type: 'prefix', score: scoreQuick(name), available: null});
     });
   });
   
   // With suffixes
-  SUFFIXES.slice(0,6).forEach(s => {
+  SUFFIXES.slice(0,8).forEach(s => {
     TLDS.slice(0,4).forEach(t => {
-      const name = k+s;
-      if(name.length <= 12) domains.push({name, tld: t, domain: name+t, type: 'suffix', score: scoreQuick(name)});
+      const name = kw+s;
+      if(name.length <= 12) domains.push({name, tld: t, domain: name+t, type: 'suffix', score: scoreQuick(name), available: null});
     });
   });
   
-  // Remove duplicates, sort by quality
   const seen = new Set();
   const unique = [];
   domains.forEach(d => {
@@ -447,23 +443,20 @@ function generateQuickProposals(kw) {
     return a.name.length - b.name.length;
   });
   
-  return unique.slice(0, 20);
+  return unique.slice(0, 24);
 }
 
 function generateCoinedProposals(kw) {
-  const k = kw.toLowerCase().replace(/[^a-z]/g,'');
   const coined = new Set();
   
-  // Variations from single word
-  for(let i=2;i<=Math.min(k.length,6);i++){
+  for(let i=2;i<=Math.min(kw.length,6);i++){
     ENDINGS.forEach(e => {
-      const n = k.slice(0,i)+e;
-      if(n.length>=4&&n.length<=10&&n!==k) coined.add(n);
+      const n = kw.slice(0,i)+e;
+      if(n.length>=4&&n.length<=10&&n!==kw) coined.add(n);
     });
   }
   
-  // Consonant removal
-  const vd = k.replace(/[aeiou]/g,'').slice(0,8);
+  const vd = kw.replace(/[aeiou]/g,'').slice(0,8);
   if(vd.length>=2){
     ENDINGS.slice(0,6).forEach(e => {
       const n = vd+e;
@@ -471,10 +464,9 @@ function generateCoinedProposals(kw) {
     });
   }
   
-  // Prefix variants
   BEGINS.slice(0,4).forEach(b => {
     for(let i=3;i<=5;i++){
-      const nt = b+k.slice(0,i);
+      const nt = b+kw.slice(0,i);
       if(nt.length>=4&&nt.length<=9) coined.add(nt);
     }
   });
@@ -485,7 +477,7 @@ function generateCoinedProposals(kw) {
       const vowels = (name.match(/[aeiou]/g)||[]).length;
       const pronounceable = /^[bcdfghjklmnpqrstvwxyz]?[aeiou]/.test(name) || vowels/name.length > 0.25;
       const score = name.length <= 5 && pronounceable ? 'hot' : name.length <= 7 && pronounceable ? 'good' : 'ok';
-      domains.push({name, tld: t, domain: name+t, type: 'coined', score: {type: score}});
+      domains.push({name, tld: t, domain: name+t, type: 'coined', score: {type: score}, available: null});
     });
   });
   
@@ -494,34 +486,25 @@ function generateCoinedProposals(kw) {
     return (order[a.score.type]||3) - (order[b.score.type]||3);
   });
   
-  return domains.slice(0, 20);
+  return domains.slice(0, 24);
 }
 
 function generateExpiredProposals(kw) {
-  const k = kw.toLowerCase().replace(/[^a-z0-9]/g,'');
-  const expired = [];
-  
   const candidates = [
-    {name: k+'hub', tld: '.com', snapshots: 156, backlinks: 24, potential: 'high'},
-    {name: k+'base', tld: '.com', snapshots: 89, backlinks: 12, potential: 'medium'},
-    {name: k+'pro', tld: '.io', snapshots: 201, backlinks: 45, potential: 'high'},
-    {name: k+'lab', tld: '.app', snapshots: 45, backlinks: 3, potential: 'low'},
-    {name: k+'center', tld: '.com', snapshots: 120, backlinks: 18, potential: 'medium'},
-    {name: k+'stack', tld: '.tech', snapshots: 78, backlinks: 8, potential: 'low'},
+    {name: kw+'hub', tld: '.com', snapshots: 156, backlinks: 24, potential: 'high'},
+    {name: kw+'base', tld: '.com', snapshots: 89, backlinks: 12, potential: 'medium'},
+    {name: kw+'pro', tld: '.io', snapshots: 201, backlinks: 45, potential: 'high'},
+    {name: kw+'lab', tld: '.app', snapshots: 45, backlinks: 3, potential: 'low'},
+    {name: kw+'center', tld: '.com', snapshots: 120, backlinks: 18, potential: 'medium'},
+    {name: kw+'stack', tld: '.tech', snapshots: 78, backlinks: 8, potential: 'low'},
   ];
   
-  candidates.forEach((d,i) => {
-    expired.push({...d, domain: d.name+d.tld, type: 'expired', available: false});
-  });
-  
-  return expired;
+  return candidates.map(d => ({...d, domain: d.name+d.tld, type: 'expired', available: false}));
 }
 
 function calculateSEOProposals(kw) {
-  const k = kw.toLowerCase().replace(/[^a-z0-9]/g,'');
+  const baseNames = [kw, 'get'+kw, kw+'hub', kw+'pro', kw+'ai', kw+'lab'];
   const seo = [];
-  
-  const baseNames = [k, 'get'+k, k+'hub', k+'pro', k+'ai', k+'lab'];
   
   baseNames.forEach(name => {
     TLDS.forEach(tld => {
@@ -570,21 +553,6 @@ function calculateSEOScore(domain, tld) {
   return Math.min(100, Math.max(0, Math.round(score)));
 }
 
-async function checkAvailability(domains) {
-  for(const d of domains.slice(0, 10)) {
-    try {
-      const res = await fetch(`https://cloudflare-dns.com/dns-query?name=${d.domain}&type=A`, {
-        headers: {Accept: 'application/dns-json'}
-      });
-      const data = await res.json();
-      d.available = (data.Status === 3 || (data.Status === 0 && (!data.Answer || data.Answer.length === 0)));
-      await new Promise(r => setTimeout(r, 50));
-    } catch(e) {
-      d.available = null;
-    }
-  }
-}
-
 // ════════════════════════════════════════════════════════════════
 // RENDERING
 // ════════════════════════════════════════════════════════════════
@@ -593,34 +561,33 @@ function renderAllResults() {
   const resultsDiv = document.getElementById('results');
   resultsDiv.innerHTML = '';
   
-  let hasResults = false;
+  let totalCount = 0;
   
-  // Quick Hunt Results
-  if(allResults.quick.length > 0 && activeFilters.available) {
+  if(allResults.quick && allResults.quick.length > 0) {
     renderSection('⚡ Quick Hunt', allResults.quick, 'quick');
-    hasResults = true;
+    totalCount += allResults.quick.length;
   }
   
-  // Coined Names Results
-  if(allResults.coined.length > 0 && activeFilters.available) {
-    renderSection('🔬 Coined Names (Spotify-style)', allResults.coined, 'coined');
-    hasResults = true;
+  if(allResults.coined && allResults.coined.length > 0) {
+    renderSection('🔬 Coined Names', allResults.coined, 'coined');
+    totalCount += allResults.coined.length;
   }
   
-  // Expired Domains Results
-  if(allResults.expired.length > 0 && activeFilters.expired) {
+  if(allResults.expired && allResults.expired.length > 0) {
     renderSection('💀 Expired Potential', allResults.expired, 'expired');
-    hasResults = true;
+    totalCount += allResults.expired.length;
   }
   
-  // High SEO Scoring Results
-  if(allResults.seo.length > 0 && activeFilters.seo) {
-    renderSection('📊 High SEO Score', allResults.seo.filter(d => d.seoLevel === 'high'), 'seo');
-    hasResults = true;
+  if(allResults.seo && allResults.seo.length > 0) {
+    const highSEO = allResults.seo.filter(d => d.seoLevel === 'high');
+    if(highSEO.length > 0) {
+      renderSection('📊 High SEO Score', highSEO, 'seo');
+      totalCount += highSEO.length;
+    }
   }
   
-  if(!hasResults) {
-    resultsDiv.innerHTML = '<div class="empty-state">No results match your filters</div>';
+  if(totalCount === 0) {
+    resultsDiv.innerHTML = '<div class="empty-state">Pas de résultats trouvés</div>';
   }
 }
 
@@ -645,7 +612,7 @@ function renderSection(title, items, type) {
     if(type === 'quick' || type === 'coined') {
       const scoreClass = item.score.type === 'hot' ? 'badge-hot' : item.score.type === 'good' ? 'badge-good' : 'badge-ok';
       badgesHTML += `<div class="badge ${scoreClass}">${item.score.label}</div>`;
-      if(item.available) badgesHTML += `<div class="badge badge-available">✓</div>`;
+      if(item.available === true) badgesHTML += `<div class="badge badge-available">✓</div>`;
     }
     
     if(type === 'expired') {
@@ -660,7 +627,7 @@ function renderSection(title, items, type) {
     
     let actionsHTML = '';
     
-    if(item.available) {
+    if(item.available === true) {
       actionsHTML += `
         <a href="https://porkbun.com/checkout/search?q=${item.domain}" target="_blank" class="link-btn">PB</a>
         <a href="https://www.namecheap.com/domains/registration/results/?domain=${item.domain}" target="_blank" class="link-btn">NC</a>
@@ -691,21 +658,6 @@ function renderSection(title, items, type) {
 // UTILS
 // ════════════════════════════════════════════════════════════════
 
-function toggleFilter(filter, el) {
-  if(filter === 'all') {
-    document.querySelectorAll('.filter-btn').forEach(btn => {
-      btn.classList.add('active');
-      activeFilters.available = true;
-      activeFilters.expired = true;
-      activeFilters.seo = true;
-    });
-  } else {
-    activeFilters[filter] = !activeFilters[filter];
-    el.classList.toggle('active');
-  }
-  renderAllResults();
-}
-
 function copyDomain(btn, domain) {
   navigator.clipboard.writeText(domain);
   btn.textContent='✓';
@@ -720,7 +672,7 @@ function copyDomain(btn, domain) {
 // INIT
 // ════════════════════════════════════════════════════════════════
 window.onload = () => {
-  document.getElementById('main-search').value = 'spark';
+  document.getElementById('main-search').focus();
 };
 </script>
 
