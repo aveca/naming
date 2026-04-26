@@ -6,7 +6,7 @@
 <meta name="theme-color" content="#080810">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<title>Domain Finder Pro - Ultimate</title>
+<title>Domain Finder - Available Only</title>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
@@ -26,7 +26,7 @@ body{
 
 .container{
   flex:1;
-  max-width:1200px;
+  max-width:900px;
   margin:0 auto;
   width:100%;
   display:flex;
@@ -35,10 +35,10 @@ body{
 }
 
 /* Header */
-.header{margin-bottom:12px;text-align:center}
+.header{margin-bottom:20px;text-align:center}
 h1{font-size:9px;letter-spacing:2px;color:#2a2a45;text-transform:uppercase;margin-bottom:4px}
-h2{font-size:24px;font-weight:800;background:linear-gradient(135deg,#ff6b6b,#ff9800);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:8px;line-height:1.2}
-.tagline{font-size:12px;color:#2a2a45;margin-bottom:12px}
+h2{font-size:28px;font-weight:800;background:linear-gradient(135deg,#00e676,#00bcd4);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:8px;line-height:1.2}
+.tagline{font-size:12px;color:#2a2a45}
 
 /* Search Bar */
 .search-container{
@@ -52,175 +52,115 @@ h2{font-size:24px;font-weight:800;background:linear-gradient(135deg,#ff6b6b,#ff9
 
 .search-input{
   flex:1;
-  background:#111120;border:1px solid #1e1e35;border-radius:8px;
-  color:#fff;font-family:'Outfit',sans-serif;font-size:16px;
-  padding:14px 16px;outline:none;
+  background:#111120;
+  border:1px solid #1e1e35;
+  border-radius:8px;
+  color:#fff;
+  font-family:'Outfit',sans-serif;
+  font-size:16px;
+  padding:14px 16px;
+  outline:none;
   -webkit-appearance:none;
+  transition:border-color 0.15s;
 }
-.search-input:focus{border-color:#ff980044}
+.search-input:focus{border-color:#00e67644}
 .search-input::placeholder{color:#333355}
 
-/* Results Grid */
-.results-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
-  gap:12px;
+/* Results */
+.results{
   flex:1;
+  display:flex;
+  flex-direction:column;
+  gap:8px;
   overflow-y:auto;
   -webkit-overflow-scrolling:touch;
 }
 
-.result-section{
+.domain-card{
   background:#0f0f1e;
-  border:1px solid #1a1a30;
-  border-radius:12px;
-  padding:14px;
+  border:1px solid #00e67630;
+  background:#071410;
+  border-radius:8px;
+  padding:12px 14px;
   display:flex;
-  flex-direction:column;
-  gap:10px;
+  align-items:center;
+  gap:12px;
   animation:slideIn 0.2s ease forwards;
   opacity:0;
 }
-@keyframes slideIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
-
-.section-header{
-  display:flex;
-  align-items:center;
-  gap:6px;
-  font-size:11px;
-  font-weight:700;
-  color:#e0e0f0;
-  letter-spacing:0.5px;
-  text-transform:uppercase;
-  border-bottom:1px solid #1a1a30;
-  padding-bottom:8px;
-}
-
-.section-icon{
-  font-size:16px;
-}
-
-.domain-item{
-  background:#111120;
-  border:1px solid #1a1a30;
-  border-radius:8px;
-  padding:10px;
-  display:flex;
-  align-items:center;
-  gap:8px;
-  animation:fadeIn 0.2s ease;
-}
-@keyframes fadeIn{from{opacity:0}to{opacity:1}}
-
-.domain-item.available{
-  border-color:#00e67630;
-  background:#071410;
-}
+@keyframes slideIn{from{opacity:0;transform:translateY(3px)}to{opacity:1;transform:none}}
 
 .domain-name{
   flex:1;
   font-family:'JetBrains Mono',monospace;
-  font-size:11px;
+  font-size:13px;
   font-weight:600;
-  color:#e0e0f0;
+  color:#00e676;
   word-break:break-all;
 }
 
-.domain-item.available .domain-name{
-  color:#00e676;
+.domain-name .ext{
+  color:#00e67699;
+  font-weight:500;
 }
-
-.badges{
-  display:flex;
-  gap:4px;
-  flex-wrap:wrap;
-  flex-shrink:0;
-}
-
-.badge{
-  font-size:7px;
-  padding:2px 5px;
-  border-radius:4px;
-  font-weight:600;
-  white-space:nowrap;
-}
-
-.badge-hot{background:#ff980018;color:#ff9800;border:1px solid #ff980030}
-.badge-good{background:#ffab4018;color:#ffab40;border:1px solid #ffab4030}
-.badge-ok{background:#ffffff08;color:#333355;border:1px solid #ffffff10}
-.badge-available{background:#00e67620;color:#00e676;border:1px solid #00e67635}
-.badge-seo-high{background:#00e67620;color:#00e676;border:1px solid #00e67635}
-.badge-seo-medium{background:#ff980018;color:#ff9800;border:1px solid #ff980030}
-.badge-seo-low{background:#ff444418;color:#ff4444;border:1px solid #ff444430}
 
 .domain-actions{
   display:flex;
-  gap:3px;
+  gap:6px;
   flex-shrink:0;
 }
 
-.action-btn{
-  background:transparent;
-  border:1px solid #1a1a30;
-  border-radius:4px;
-  color:#2a2a45;
-  padding:3px 5px;
+.link-btn{
+  text-decoration:none;
+  background:linear-gradient(135deg,#00e676,#00bcd4);
+  border:none;
+  border-radius:6px;
+  color:#000;
+  padding:6px 12px;
+  font-size:9px;
+  font-weight:700;
   cursor:pointer;
-  font-size:8px;
+  transition:opacity 0.1s;
+  -webkit-appearance:none;
+  -webkit-tap-highlight-color:transparent;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+}
+.link-btn:active{opacity:0.7}
+
+.copy-btn{
+  background:transparent;
+  border:1px solid #00e67630;
+  border-radius:6px;
+  color:#00e67699;
+  padding:6px 8px;
+  font-size:11px;
+  cursor:pointer;
   transition:all 0.1s;
   -webkit-appearance:none;
   -webkit-user-select:none;
   user-select:none;
   -webkit-tap-highlight-color:transparent;
 }
-.domain-item.available .action-btn{
-  border-color:#00e67630;
-  color:#00e67699;
-}
-.action-btn:active{
+.copy-btn:active{
   color:#00e676;
   border-color:#00e67630;
 }
-.action-btn.ok{
-  color:#00e676;
-  border-color:#00e67630;
-}
-
-.link-btn{
-  text-decoration:none;
-  border:1px solid #1a1a30;
-  border-radius:4px;
-  color:#2a2a45;
-  padding:3px 5px;
-  font-size:8px;
-  font-weight:600;
-  transition:all 0.1s;
-  display:inline-block;
-  -webkit-tap-highlight-color:transparent;
-}
-.domain-item.available .link-btn{
-  border-color:#00e67630;
+.copy-btn.ok{
   color:#00e676;
 }
 
 .empty-state{
-  grid-column:1/-1;
   text-align:center;
   padding:40px 20px;
   color:#1a1a28;
-  font-size:12px;
-}
-
-/* Loading */
-@keyframes spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
-.spin{
-  display:inline-block;
-  width:12px;
-  height:12px;
-  border:2px solid #333355;
-  border-top-color:#ff9800;
-  border-radius:50%;
-  animation:spin 0.6s linear infinite;
+  font-size:13px;
+  line-height:1.6;
+  flex:1;
+  display:flex;
+  align-items:center;
+  justify-content:center;
 }
 
 /* Status */
@@ -230,6 +170,20 @@ h2{font-size:24px;font-weight:800;background:linear-gradient(135deg,#ff6b6b,#ff9
   padding:8px 0;
   text-align:center;
   height:20px;
+  margin-bottom:8px;
+}
+
+@keyframes spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+.spin{
+  display:inline-block;
+  width:10px;
+  height:10px;
+  border:1.5px solid #333355;
+  border-top-color:#00e676;
+  border-radius:50%;
+  animation:spin 0.6s linear infinite;
+  vertical-align:middle;
+  margin-right:4px;
 }
 
 /* Footer */
@@ -242,21 +196,11 @@ h2{font-size:24px;font-weight:800;background:linear-gradient(135deg,#ff6b6b,#ff9
   border-top:1px solid #1a1a30;
 }
 
-/* Mobile */
-@media (max-width: 768px) {
-  .results-grid{
-    grid-template-columns:repeat(auto-fill,minmax(240px,1fr));
-  }
-  h2{font-size:20px}
+@media (max-width: 600px) {
+  h2{font-size:24px}
   .search-input{font-size:14px}
-}
-
-@media (max-width: 480px) {
-  .results-grid{
-    grid-template-columns:1fr;
-  }
-  h2{font-size:18px}
-  .domain-name{font-size:10px}
+  .domain-name{font-size:12px}
+  .link-btn{padding:5px 10px;font-size:8px}
 }
 </style>
 </head>
@@ -265,119 +209,112 @@ h2{font-size:24px;font-weight:800;background:linear-gradient(135deg,#ff6b6b,#ff9
 <div class="container">
   <!-- Header -->
   <div class="header">
-    <h1>🚀 Domain Finder Pro</h1>
-    <h2>Find Your Perfect Domain</h2>
-    <p class="tagline">Type & watch instant results</p>
+    <h1>🟢 Domaines Disponibles</h1>
+    <h2>Find Available Domains</h2>
+    <p class="tagline">Tape un mot-clé</p>
   </div>
 
   <!-- Search Bar -->
   <div class="search-container">
-    <input type="text" id="main-search" class="search-input" placeholder="Tape un mot-clé (spark, edge, trade...)" oninput="handleSearch()" />
+    <input type="text" id="main-search" class="search-input" placeholder="Cherche un domaine..." oninput="handleSearch()" />
   </div>
 
   <!-- Status -->
   <div class="status-bar" id="status"></div>
 
-  <!-- Results Grid -->
-  <div class="results-grid" id="results">
-    <div class="empty-state">👆 Commence à taper un mot-clé...</div>
+  <!-- Results -->
+  <div class="results" id="results">
+    <div class="empty-state">👆 Tape un mot-clé pour commencer...</div>
   </div>
 
   <!-- Footer -->
   <div class="footer">
-    <p>Cloudflare DNS • Archive.org • 100% Privacy 🔒 | v4.0 Live Search</p>
+    <p>Cloudflare DNS • 100% Disponibles • v5.0</p>
   </div>
 </div>
 
 <script>
 // ════════════════════════════════════════════════════════════════
-// DOMAIN NAMING SUITE - v4.0 LIVE SEARCH
-// One input field, real-time results as you type
+// DOMAIN FINDER - v5.0 AVAILABLE ONLY + CLOUDFLARE ONLY
 // ════════════════════════════════════════════════════════════════
 
 const TLDS = ['.com','.io','.app','.co','.ai','.dev','.tech','.xyz'];
-
-const PREFIXES = ['get','try','use','my','the','pro','one','top','real','your','our','my'];
+const PREFIXES = ['get','try','use','my','the','pro','one','top','real'];
 const SUFFIXES = ['hq','app','ai','hub','pro','io','ly','fy','base','lab','kit','link','er','ify'];
-const ENDINGS = ['ly','fy','io','ai','r','er','ify','ix','ex','ux','on','in','iq','vy','zy'];
-const BEGINS = ['ve','ze','ka','ro','mo','lo','ko','vi','zi','li','ki','fi'];
-
-const SEO_KEYWORDS = {
-  'tech': {volume: 2400, difficulty: 85},
-  'app': {volume: 1800, difficulty: 78},
-  'ai': {volume: 3200, difficulty: 92},
-  'hub': {volume: 950, difficulty: 62},
-  'lab': {volume: 1100, difficulty: 55},
-  'pro': {volume: 2100, difficulty: 80},
-  'dev': {volume: 1600, difficulty: 75},
-  'edge': {volume: 1900, difficulty: 81},
-  'trade': {volume: 1400, difficulty: 72},
-};
-
-const TLD_AUTHORITY = {
-  '.com': 10,
-  '.io': 8,
-  '.app': 8,
-  '.co': 7,
-  '.ai': 7,
-  '.dev': 6,
-  '.tech': 5,
-  '.xyz': 3,
-};
 
 let searchTimeout;
-let allResults = {};
+let allDomains = [];
+let availableDomains = [];
 let checkingDNS = new Set();
-
-// ════════════════════════════════════════════════════════════════
-// LIVE SEARCH (triggered on input)
-// ════════════════════════════════════════════════════════════════
 
 function handleSearch() {
   const keyword = document.getElementById('main-search').value.trim();
-  
   clearTimeout(searchTimeout);
   
   if(keyword.length < 2) {
-    document.getElementById('results').innerHTML = '<div class="empty-state">👆 Commence à taper...</div>';
+    document.getElementById('results').innerHTML = '<div class="empty-state">👆 Tape au moins 2 lettres...</div>';
     document.getElementById('status').textContent = '';
     return;
   }
   
-  document.getElementById('status').innerHTML = '<span class="spin"></span> Recherche en cours...';
+  document.getElementById('status').innerHTML = '<span class="spin"></span> Vérification DNS...';
   
-  // Delay search to avoid hammering
   searchTimeout = setTimeout(() => {
-    runLiveSearch(keyword);
+    runSearch(keyword);
   }, 300);
 }
 
-async function runLiveSearch(keyword) {
+async function runSearch(keyword) {
   const k = keyword.toLowerCase().replace(/[^a-z0-9]/g,'');
   
-  allResults = {
-    quick: generateQuickProposals(k),
-    coined: generateCoinedProposals(k),
-    expired: generateExpiredProposals(k),
-    seo: calculateSEOProposals(k)
-  };
+  // Generate candidates
+  allDomains = generateCandidates(k);
+  availableDomains = [];
+  checkingDNS.clear();
   
-  // Start checking DNS in background (don't wait)
-  checkDNSinBackground(allResults.quick);
-  checkDNSinBackground(allResults.coined);
+  document.getElementById('results').innerHTML = '<div class="empty-state">🔍 Vérification en cours...</div>';
   
-  renderAllResults();
-  document.getElementById('status').innerHTML = `✓ ${allResults.quick.length + allResults.coined.length + allResults.expired.length} propositions générées`;
+  // Check DNS for ALL
+  await checkAllDNS();
+  
+  // Render only available
+  renderAvailable();
 }
 
-// ════════════════════════════════════════════════════════════════
-// DNS CHECKING (in background, doesn't block rendering)
-// ════════════════════════════════════════════════════════════════
+function generateCandidates(kw) {
+  const candidates = [];
+  
+  // Direct
+  TLDS.forEach(t => candidates.push({name: kw, tld: t, domain: kw+t}));
+  
+  // Prefixes
+  PREFIXES.forEach(p => {
+    TLDS.slice(0,4).forEach(t => {
+      const name = p+kw;
+      if(name.length <= 12) candidates.push({name, tld: t, domain: name+t});
+    });
+  });
+  
+  // Suffixes
+  SUFFIXES.forEach(s => {
+    TLDS.slice(0,4).forEach(t => {
+      const name = kw+s;
+      if(name.length <= 12) candidates.push({name, tld: t, domain: name+t});
+    });
+  });
+  
+  // Remove duplicates
+  const seen = new Set();
+  return candidates.filter(d => {
+    if(seen.has(d.domain)) return false;
+    seen.add(d.domain);
+    return true;
+  }).slice(0, 60);
+}
 
-async function checkDNSinBackground(domains) {
-  for(const d of domains.slice(0, 15)) {
+async function checkAllDNS() {
+  for(const d of allDomains) {
     if(checkingDNS.has(d.domain)) continue;
-    
     checkingDNS.add(d.domain);
     
     try {
@@ -385,292 +322,63 @@ async function checkDNSinBackground(domains) {
         headers: {Accept: 'application/dns-json'}
       });
       const data = await res.json();
+      
+      // Available = NXDOMAIN (status 3) or NODATA (status 0 with no answers)
       d.available = (data.Status === 3 || (data.Status === 0 && (!data.Answer || data.Answer.length === 0)));
       
-      // Re-render if this domain is visible
-      renderAllResults();
+      if(d.available) {
+        availableDomains.push(d);
+        renderAvailable();
+      }
       
-      await new Promise(r => setTimeout(r, 100));
+      await new Promise(r => setTimeout(r, 80));
     } catch(e) {
-      d.available = null;
+      // Ignore fetch errors, just mark as unknown
     }
   }
 }
 
-// ════════════════════════════════════════════════════════════════
-// PROPOSAL GENERATORS
-// ════════════════════════════════════════════════════════════════
-
-function generateQuickProposals(kw) {
-  const domains = [];
-  
-  // Direct keyword
-  TLDS.forEach(t => {
-    const name = kw;
-    domains.push({name, tld: t, domain: name+t, type: 'direct', score: scoreQuick(name), available: null});
-  });
-  
-  // With prefixes
-  PREFIXES.slice(0,8).forEach(p => {
-    TLDS.slice(0,4).forEach(t => {
-      const name = p+kw;
-      if(name.length <= 12) domains.push({name, tld: t, domain: name+t, type: 'prefix', score: scoreQuick(name), available: null});
-    });
-  });
-  
-  // With suffixes
-  SUFFIXES.slice(0,8).forEach(s => {
-    TLDS.slice(0,4).forEach(t => {
-      const name = kw+s;
-      if(name.length <= 12) domains.push({name, tld: t, domain: name+t, type: 'suffix', score: scoreQuick(name), available: null});
-    });
-  });
-  
-  const seen = new Set();
-  const unique = [];
-  domains.forEach(d => {
-    if(!seen.has(d.domain)) {
-      seen.add(d.domain);
-      unique.push(d);
-    }
-  });
-  
-  unique.sort((a,b) => {
-    const scoreOrder = {hot: 0, good: 1, ok: 2};
-    const aScore = scoreOrder[a.score.type] || 3;
-    const bScore = scoreOrder[b.score.type] || 3;
-    if(aScore !== bScore) return aScore - bScore;
-    return a.name.length - b.name.length;
-  });
-  
-  return unique.slice(0, 24);
-}
-
-function generateCoinedProposals(kw) {
-  const coined = new Set();
-  
-  for(let i=2;i<=Math.min(kw.length,6);i++){
-    ENDINGS.forEach(e => {
-      const n = kw.slice(0,i)+e;
-      if(n.length>=4&&n.length<=10&&n!==kw) coined.add(n);
-    });
-  }
-  
-  const vd = kw.replace(/[aeiou]/g,'').slice(0,8);
-  if(vd.length>=2){
-    ENDINGS.slice(0,6).forEach(e => {
-      const n = vd+e;
-      if(n.length>=4&&n.length<=9) coined.add(n);
-    });
-  }
-  
-  BEGINS.slice(0,4).forEach(b => {
-    for(let i=3;i<=5;i++){
-      const nt = b+kw.slice(0,i);
-      if(nt.length>=4&&nt.length<=9) coined.add(nt);
-    }
-  });
-  
-  const domains = [];
-  coined.forEach(name => {
-    TLDS.slice(0,4).forEach(t => {
-      const vowels = (name.match(/[aeiou]/g)||[]).length;
-      const pronounceable = /^[bcdfghjklmnpqrstvwxyz]?[aeiou]/.test(name) || vowels/name.length > 0.25;
-      const score = name.length <= 5 && pronounceable ? 'hot' : name.length <= 7 && pronounceable ? 'good' : 'ok';
-      domains.push({name, tld: t, domain: name+t, type: 'coined', score: {type: score}, available: null});
-    });
-  });
-  
-  domains.sort((a,b) => {
-    const order = {hot:0,good:1,ok:2};
-    return (order[a.score.type]||3) - (order[b.score.type]||3);
-  });
-  
-  return domains.slice(0, 24);
-}
-
-function generateExpiredProposals(kw) {
-  const candidates = [
-    {name: kw+'hub', tld: '.com', snapshots: 156, backlinks: 24, potential: 'high'},
-    {name: kw+'base', tld: '.com', snapshots: 89, backlinks: 12, potential: 'medium'},
-    {name: kw+'pro', tld: '.io', snapshots: 201, backlinks: 45, potential: 'high'},
-    {name: kw+'lab', tld: '.app', snapshots: 45, backlinks: 3, potential: 'low'},
-    {name: kw+'center', tld: '.com', snapshots: 120, backlinks: 18, potential: 'medium'},
-    {name: kw+'stack', tld: '.tech', snapshots: 78, backlinks: 8, potential: 'low'},
-  ];
-  
-  return candidates.map(d => ({...d, domain: d.name+d.tld, type: 'expired', available: false}));
-}
-
-function calculateSEOProposals(kw) {
-  const baseNames = [kw, 'get'+kw, kw+'hub', kw+'pro', kw+'ai', kw+'lab'];
-  const seo = [];
-  
-  baseNames.forEach(name => {
-    TLDS.forEach(tld => {
-      const score = calculateSEOScore(name, tld);
-      const level = score >= 80 ? 'high' : score >= 60 ? 'medium' : 'low';
-      seo.push({
-        name, tld, domain: name+tld,
-        type: 'seo',
-        seoScore: score,
-        seoLevel: level,
-        available: false
-      });
-    });
-  });
-  
-  seo.sort((a,b) => b.seoScore - a.seoScore);
-  return seo.slice(0, 20);
-}
-
-function scoreQuick(name) {
-  const len = name.length;
-  if(len <= 5) return {type: 'hot', label: '🔥'};
-  if(len <= 7) return {type: 'good', label: '✓'};
-  return {type: 'ok', label: 'OK'};
-}
-
-function calculateSEOScore(domain, tld) {
-  const len = domain.length;
-  let score = 50;
-  
-  if(len <= 5) score += 25;
-  else if(len <= 7) score += 15;
-  else if(len <= 10) score += 5;
-  
-  const vowelRatio = (domain.match(/[aeiou]/g)||[]).length / len;
-  if(vowelRatio >= 0.3 && vowelRatio <= 0.5) score += 10;
-  
-  for(const [keyword, data] of Object.entries(SEO_KEYWORDS)) {
-    if(domain.includes(keyword)) {
-      score += Math.min(20, data.volume / 200);
-    }
-  }
-  
-  if(TLD_AUTHORITY[tld]) score += TLD_AUTHORITY[tld];
-  
-  return Math.min(100, Math.max(0, Math.round(score)));
-}
-
-// ════════════════════════════════════════════════════════════════
-// RENDERING
-// ════════════════════════════════════════════════════════════════
-
-function renderAllResults() {
+function renderAvailable() {
   const resultsDiv = document.getElementById('results');
+  
+  if(availableDomains.length === 0) {
+    resultsDiv.innerHTML = '<div class="empty-state">❌ Aucun domaine disponible trouvé</div>';
+    document.getElementById('status').textContent = '';
+    return;
+  }
+  
   resultsDiv.innerHTML = '';
   
-  let totalCount = 0;
-  
-  if(allResults.quick && allResults.quick.length > 0) {
-    renderSection('⚡ Quick Hunt', allResults.quick, 'quick');
-    totalCount += allResults.quick.length;
-  }
-  
-  if(allResults.coined && allResults.coined.length > 0) {
-    renderSection('🔬 Coined Names', allResults.coined, 'coined');
-    totalCount += allResults.coined.length;
-  }
-  
-  if(allResults.expired && allResults.expired.length > 0) {
-    renderSection('💀 Expired Potential', allResults.expired, 'expired');
-    totalCount += allResults.expired.length;
-  }
-  
-  if(allResults.seo && allResults.seo.length > 0) {
-    const highSEO = allResults.seo.filter(d => d.seoLevel === 'high');
-    if(highSEO.length > 0) {
-      renderSection('📊 High SEO Score', highSEO, 'seo');
-      totalCount += highSEO.length;
-    }
-  }
-  
-  if(totalCount === 0) {
-    resultsDiv.innerHTML = '<div class="empty-state">Pas de résultats trouvés</div>';
-  }
-}
-
-function renderSection(title, items, type) {
-  const resultsDiv = document.getElementById('results');
-  
-  const section = document.createElement('div');
-  section.className = 'result-section';
-  
-  const header = document.createElement('div');
-  header.className = 'section-header';
-  header.innerHTML = title;
-  section.appendChild(header);
-  
-  items.slice(0, 8).forEach((item, idx) => {
-    const domainEl = document.createElement('div');
-    domainEl.className = 'domain-item' + (item.available ? ' available' : '');
-    domainEl.style.animationDelay = `${idx * 0.03}s`;
+  availableDomains.forEach((d, idx) => {
+    const card = document.createElement('div');
+    card.className = 'domain-card';
+    card.style.animationDelay = `${idx * 0.02}s`;
     
-    let badgesHTML = '';
-    
-    if(type === 'quick' || type === 'coined') {
-      const scoreClass = item.score.type === 'hot' ? 'badge-hot' : item.score.type === 'good' ? 'badge-good' : 'badge-ok';
-      badgesHTML += `<div class="badge ${scoreClass}">${item.score.label}</div>`;
-      if(item.available === true) badgesHTML += `<div class="badge badge-available">✓</div>`;
-    }
-    
-    if(type === 'expired') {
-      const potClass = item.potential === 'high' ? 'badge-seo-high' : item.potential === 'medium' ? 'badge-seo-medium' : 'badge-seo-low';
-      badgesHTML += `<div class="badge ${potClass}">SEO ${item.potential}</div>`;
-    }
-    
-    if(type === 'seo') {
-      const scoreClass = item.seoLevel === 'high' ? 'badge-seo-high' : item.seoLevel === 'medium' ? 'badge-seo-medium' : 'badge-seo-low';
-      badgesHTML += `<div class="badge ${scoreClass}">📊 ${item.seoScore}</div>`;
-    }
-    
-    let actionsHTML = '';
-    
-    if(item.available === true) {
-      actionsHTML += `
-        <a href="https://porkbun.com/checkout/search?q=${item.domain}" target="_blank" class="link-btn">PB</a>
-        <a href="https://www.namecheap.com/domains/registration/results/?domain=${item.domain}" target="_blank" class="link-btn">NC</a>
-      `;
-    }
-    
-    if(type === 'expired') {
-      actionsHTML += `
-        <a href="https://web.archive.org/web/*/${item.domain}/" target="_blank" class="link-btn">Archive</a>
-      `;
-    }
-    
-    actionsHTML += `<button class="action-btn" onclick="copyDomain(this,'${item.domain}')">⎘</button>`;
-    
-    domainEl.innerHTML = `
-      <div class="domain-name">${item.name}<span style="color:#444466">${item.tld}</span></div>
-      <div class="badges">${badgesHTML}</div>
-      <div class="domain-actions">${actionsHTML}</div>
+    card.innerHTML = `
+      <div class="domain-name">${d.name}<span class="ext">${d.tld}</span></div>
+      <div class="domain-actions">
+        <a href="https://www.cloudflare.com/products/registrar/" target="_blank" class="link-btn">🔗 Cloudflare</a>
+        <button class="copy-btn" onclick="copyDomain(this,'${d.domain}')">📋</button>
+      </div>
     `;
     
-    section.appendChild(domainEl);
+    resultsDiv.appendChild(card);
   });
   
-  resultsDiv.appendChild(section);
+  document.getElementById('status').textContent = `✓ ${availableDomains.length} disponible${availableDomains.length>1?'s':''}`;
 }
-
-// ════════════════════════════════════════════════════════════════
-// UTILS
-// ════════════════════════════════════════════════════════════════
 
 function copyDomain(btn, domain) {
-  navigator.clipboard.writeText(domain);
-  btn.textContent='✓';
-  btn.classList.add('ok');
-  setTimeout(() => {
-    btn.textContent='⎘';
-    btn.classList.remove('ok');
-  }, 1500);
+  navigator.clipboard.writeText(domain).then(() => {
+    btn.textContent = '✓';
+    btn.classList.add('ok');
+    setTimeout(() => {
+      btn.textContent = '📋';
+      btn.classList.remove('ok');
+    }, 1500);
+  });
 }
 
-// ════════════════════════════════════════════════════════════════
-// INIT
-// ════════════════════════════════════════════════════════════════
 window.onload = () => {
   document.getElementById('main-search').focus();
 };
