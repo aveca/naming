@@ -229,13 +229,13 @@ h2{font-size:28px;font-weight:800;background:linear-gradient(135deg,#00e676,#00b
 
   <!-- Footer -->
   <div class="footer">
-    <p>Cloudflare DNS • 100% Disponibles • v5.0</p>
+    <p>Cloudflare DNS • 100% Disponibles • v5.1</p>
   </div>
 </div>
 
 <script>
 // ════════════════════════════════════════════════════════════════
-// DOMAIN FINDER - v5.0 AVAILABLE ONLY + CLOUDFLARE ONLY
+// DOMAIN FINDER - v5.1 CLOUDFLARE DIRECT SEARCH
 // ════════════════════════════════════════════════════════════════
 
 const TLDS = ['.com','.io','.app','.co','.ai','.dev','.tech','.xyz'];
@@ -354,10 +354,13 @@ function renderAvailable() {
     card.className = 'domain-card';
     card.style.animationDelay = `${idx * 0.02}s`;
     
+    // Generate Cloudflare Registrar search URL with domain pre-filled
+    const cfUrl = `https://www.cloudflare.com/products/registrar/?query=${d.domain}`;
+    
     card.innerHTML = `
       <div class="domain-name">${d.name}<span class="ext">${d.tld}</span></div>
       <div class="domain-actions">
-        <a href="https://www.cloudflare.com/products/registrar/" target="_blank" class="link-btn">🔗 Cloudflare</a>
+        <a href="${cfUrl}" target="_blank" class="link-btn">🔗 Cloudflare</a>
         <button class="copy-btn" onclick="copyDomain(this,'${d.domain}')">📋</button>
       </div>
     `;
